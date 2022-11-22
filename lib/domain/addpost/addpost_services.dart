@@ -5,5 +5,5 @@ import 'package:lobopunk/domain/core/failures/main_failure.dart';
 
 abstract class AddPostService {
   Future<Either<MainFailure, File>> addPostVideo();
-  Future<Either<MainFailure, Map>> uploadPostVideo(File file);
+  Future<Map<String, dynamic>> uploadPostVideo(File file);
 }

@@ -24,9 +24,18 @@ class _PostUploadScreenState extends State<PostUploadScreen> {
   File highvid = File('');
   File midvid = File('');
 
+  String thumbnaillink = "";
+  String lowvidlink = "";
+  String midvidlink = "";
+  String highvidlink = "";
+
   bool ishighvid = false;
   bool ismidvid = false;
   bool islowvid = false;
+
+  bool ishighlink = false;
+  bool ismidlink = false;
+  bool islowlink = false;
 
   File lowvid = File('');
   MediaInfo info = MediaInfo(path: '');
@@ -59,6 +68,9 @@ class _PostUploadScreenState extends State<PostUploadScreen> {
     setState(() {
       thumbnail = File(changeFileName(thumbnailFile, 'thumbnail.jpg'));
       info = inf;
+    });
+    await AddPostImplementation().uploadPostVideo(thumbnail).then((value) {
+      thumbnaillink = value['filepath'];
     });
 
     //lowvid = File(changeFileName(orginalvideo, "lowvid.mp4"));
@@ -110,18 +122,35 @@ class _PostUploadScreenState extends State<PostUploadScreen> {
               )));
 
       final infoo = await VideoCompressApi.compressVideo(
-              path, VideoQuality.Res640x480Quality)
-          .whenComplete(() {
-        midVideoCompression(orginalvideo);
-      });
+          path, VideoQuality.Res640x480Quality);
       setState(() {
         islowvid = true;
         lowcompressVideoInfo = infoo;
-        lowvid = File(changeFileName(lowcompressVideoInfo!.file!, 'lowvid'));
+        lowvid =
+            File(changeFileName(lowcompressVideoInfo!.file!, 'lowvid.mp4'));
         Navigator.pop(context);
       });
+      await AddPostImplementation().uploadPostVideo(lowvid).then((value) async {
+        lowvidlink = await value['filepath'];
+        midvidlink = lowvidlink;
+        highvidlink = lowvidlink;
+      }).whenComplete(() {
+        midVideoCompression(orginalvideo);
+      });
     } else {
-      print("no low quality compress");
+      var lastIndex = orginalvideo.path.lastIndexOf("/");
+      String newpath = orginalvideo.path.substring(0, lastIndex);
+
+      final newFile = await orginalvideo.copy('$newpath/lowvid.mp4');
+      lowvid = newFile;
+      await AddPostImplementation().uploadPostVideo(lowvid).then((value) {
+        setState(() {
+          lowvidlink = value['filepath'];
+
+          midvidlink = lowvidlink;
+          highvidlink = lowvidlink;
+        });
+      });
     }
     log(lowvid.path.toString());
   }
@@ -138,20 +167,24 @@ class _PostUploadScreenState extends State<PostUploadScreen> {
               )));
 
       final infoo = await VideoCompressApi.compressVideo(
-              path, VideoQuality.Res960x540Quality)
-          .whenComplete(() {
-        highVideoCompression(orginalvideo);
-      });
+          path, VideoQuality.Res960x540Quality);
       setState(() {
         ismidvid = true;
         midcompressVideoInfo = infoo;
-        midvid = File(changeFileName(midcompressVideoInfo!.file!, 'midvid'));
+        midvid =
+            File(changeFileName(midcompressVideoInfo!.file!, 'midvid.mp4'));
         Navigator.pop(context);
+      });
+      await AddPostImplementation().uploadPostVideo(midvid).then((value) async {
+        midvidlink = await value['filepath'];
+
+        highvidlink = midvidlink;
+      }).whenComplete(() {
+        highVideoCompression(orginalvideo);
       });
     } else {
       print("no mid quality compress");
     }
-    log(midvid.path.toString());
   }
 
   highVideoCompression(File path) async {
@@ -170,13 +203,25 @@ class _PostUploadScreenState extends State<PostUploadScreen> {
       setState(() {
         ishighvid = true;
         highcompressVideoInfo = infoo;
-        highvid = File(changeFileName(highcompressVideoInfo!.file!, "highvid"));
+        highvid =
+            File(changeFileName(highcompressVideoInfo!.file!, "highvid.mp4"));
         Navigator.pop(context);
+      });
+      await AddPostImplementation().uploadPostVideo(midvid).then((value) {
+        highvidlink = value['filepath'];
       });
     } else {
       print("no high quality compress");
     }
-    log(highvid.path.toString());
+  }
+
+  uploadingSection() async {
+    try {
+      if (thumbnaillink != "" && lowvidlink != "") {
+      } else {}
+    } catch (e) {
+      //
+    }
   }
 
   @override
@@ -241,6 +286,9 @@ class _PostUploadScreenState extends State<PostUploadScreen> {
               Text("high compressed : $ishighvid"),
               Text("mid compressed : $ismidvid"),
               Text("low compressed : $islowvid"),
+              Text("d $highvidlink"),
+              Text("m: $midvidlink"),
+              Text(" $lowvidlink"),
               (lowvid.path == "")
                   ? Container()
                   : Text(getFileSize(lowvid).toString()),

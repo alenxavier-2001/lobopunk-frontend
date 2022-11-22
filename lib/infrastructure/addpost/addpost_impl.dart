@@ -45,9 +45,10 @@ class AddPostImplementation extends AddPostService {
   }
 
   @override
-  Future<Either<MainFailure, Map>> uploadPostVideo(File file) async {
+  Future<Map<String, dynamic>> uploadPostVideo(File file) async {
+    print("fdckcl");
     try {
-      Map data = {};
+      Map<String, dynamic> data = {};
 
       final prefs = await SharedPreferences.getInstance();
       final String token = prefs.getString('token') ?? "";
@@ -60,22 +61,17 @@ class AddPostImplementation extends AddPostService {
 
       request.files.add(await http.MultipartFile.fromPath('myFile', file.path));
 
-      await request.send().then((response) {
-        http.Response.fromStream(response).then((onValue) {
-          try {
-            log(jsonDecode(onValue.body).toString());
-            data = jsonDecode(onValue.body);
-            return Right(jsonDecode(onValue.body));
-          } catch (e) {
-            log(e.toString());
-            return const Left(MainFailure.serverFailure());
-          }
+      await request.send().then((response) async {
+        await http.Response.fromStream(response).then((onValue) {
+          data = jsonDecode(onValue.body);
+          return data;
         });
       });
-      return Right(data);
+      print(data);
+      return data;
     } catch (e) {
       log(e.toString());
-      return const Left(MainFailure.clientFailure());
+      return {};
     }
   }
 }
