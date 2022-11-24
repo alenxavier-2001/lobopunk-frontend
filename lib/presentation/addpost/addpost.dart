@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lobopunk/application/account/account_bloc.dart';
 import 'package:lobopunk/application/addpost/addpost_bloc.dart';
 import 'package:lobopunk/core/color.dart';
+import 'package:lobopunk/domain/core/failures/main_failure.dart';
+import 'package:lobopunk/infrastructure/addpost/addpost_impl.dart';
 import 'package:lobopunk/presentation/addpost/post_upload.dart';
 import 'package:lobopunk/widgets/chipwidget.dart';
 import 'package:lobopunk/widgets/mysizedbox.dart';
@@ -28,6 +30,31 @@ class _AddPostScreenState extends State<AddPostScreen> {
   bool highvalue = true;
   bool guideline = false;
   List hashtags = [];
+  File thumbnail = File("");
+
+  @override
+  void initState() {
+    getVideoThumbnail();
+    super.initState();
+  }
+
+  getVideoThumbnail() async {
+    final thumbnailFile =
+        await AddPostImplementation().getVideoThumbnail(widget.file);
+
+    thumbnailFile.fold((MainFailure failure) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Some Restarted'),
+        duration: Duration(seconds: 1),
+      ));
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    }, (File resfile) {
+      setState(() {
+        thumbnail = resfile;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -82,9 +109,15 @@ class _AddPostScreenState extends State<AddPostScreen> {
               ),
               const MySizedBox70(),
               Container(
-                width: width / 3,
-                height: height / 4,
-                color: Colors.grey,
+                width: width / 2,
+                height: height / 3,
+                decoration: BoxDecoration(
+                    color: Colors.grey,
+                    image: (thumbnail.path.isNotEmpty)
+                        ? DecorationImage(
+                            image: FileImage(thumbnail), fit: BoxFit.cover)
+                        : null,
+                    borderRadius: BorderRadius.circular(30)),
               ),
               const MySizedBox70(),
               ParaTextField(

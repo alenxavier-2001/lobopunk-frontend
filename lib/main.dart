@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         onGenerateRoute: (settings) => generateRoute(settings),
-        home: const HomeScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

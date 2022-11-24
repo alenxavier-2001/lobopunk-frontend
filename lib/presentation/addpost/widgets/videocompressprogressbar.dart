@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:lobopunk/core/color.dart';
 import 'package:video_compress/video_compress.dart';
 
 class CompressProgress extends StatefulWidget {
@@ -35,19 +36,11 @@ class _CompressProgressState extends State<CompressProgress> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          "Compressing video...",
-          style: TextStyle(fontSize: 20),
-        ),
-        SizedBox(
-          height: 24,
-        ),
         LinearProgressIndicator(
           value: value,
-          minHeight: 12,
-        ),
-        SizedBox(
-          height: 16,
+          minHeight: 10,
+          color: appColor,
+          backgroundColor: const Color.fromARGB(255, 227, 225, 225),
         ),
       ],
     );
