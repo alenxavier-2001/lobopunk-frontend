@@ -7,6 +7,7 @@ import 'package:lobopunk/domain/core/failures/main_failure.dart';
 
 import 'package:lobopunk/infrastructure/auth/auth_impl.dart';
 import 'package:lobopunk/presentation/account/account_screen.dart';
+import 'package:lobopunk/presentation/main_page/main_page_screen.dart';
 
 import 'package:lobopunk/widgets/mysizedbox.dart';
 import 'package:lobopunk/widgets/mysizedbox70.dart';
@@ -247,11 +248,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   await SharedPreferences.getInstance();
                               await prefs.setString('token', token).then((_) {
                                 Navigator.pop(context);
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const AccountScreen()));
+                                Navigator.pushReplacementNamed(
+                                    context, MainPageScreen.routeName);
                               });
                             });
                           } else {

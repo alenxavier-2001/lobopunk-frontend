@@ -30,7 +30,7 @@ _i1.GetIt $initGetIt(
     environmentFilter,
   );
   gh.lazySingleton<_i3.AccountService>(() => _i4.AccountImplementation());
-  gh.lazySingleton<_i5.AddPostService>(() => _i6.AddPostImplementation());
+
   gh.lazySingleton<_i7.AuthService>(() => _i8.AuthImplementation());
   gh.factory<_i9.AccountBloc>(() => _i9.AccountBloc(get<_i3.AccountService>()));
   return get;

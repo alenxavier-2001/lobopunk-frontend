@@ -11,6 +11,7 @@ import 'package:lobopunk/presentation/account/account_screen.dart';
 import 'package:lobopunk/presentation/addpost/addpost.dart';
 import 'package:lobopunk/presentation/auth/signin/signin.dart';
 import 'package:lobopunk/presentation/home/home_screen.dart';
+import 'package:lobopunk/presentation/main_page/main_page_screen.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,7 +42,8 @@ class MyApp extends StatelessWidget {
           ),
           scaffoldBackgroundColor: const Color.fromARGB(255, 33, 32, 32),
           textTheme: const TextTheme(
-            bodyMedium: TextStyle(color: Colors.white),
+            bodyMedium:
+                TextStyle(color: Colors.white, fontWeight: FontWeight.w400),
             headlineMedium: TextStyle(color: Colors.white),
           ),
 
@@ -58,6 +60,7 @@ class MyApp extends StatelessWidget {
         ),
         onGenerateRoute: (settings) => generateRoute(settings),
         home: const SplashScreen(),
+        // home: MainPageScreen(),
       ),
     );
   }
@@ -90,7 +93,8 @@ class _SplashScreenState extends State<SplashScreen> {
       }, (bool val) {
         if (val) {
           Timer(const Duration(milliseconds: 500), () {
-            Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => MainPageScreen()));
           });
         } else {
           Navigator.pushReplacementNamed(context, SignInScreen.routeName);
