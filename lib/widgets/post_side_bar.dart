@@ -6,7 +6,11 @@ String imgurl1 =
     "https://media.zigcdn.com/media/content/2022/May/179348629-210414-01_002-1200x493_720x540.jpg";
 
 class PostSideBar extends StatelessWidget {
-  const PostSideBar({super.key});
+  final Widget likeButtonWidget;
+  const PostSideBar({
+    super.key,
+    required this.likeButtonWidget,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +21,7 @@ class PostSideBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         _profileImageButton(),
-        Icon(
-          Icons.logo_dev,
-          size: 40,
-        ),
+        likeButtonWidget,
         Icon(
           Icons.comment,
           size: 40,

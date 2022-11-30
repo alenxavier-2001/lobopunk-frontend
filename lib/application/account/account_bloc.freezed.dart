@@ -19,32 +19,38 @@ mixin _$AccountEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadUserData,
+    required TResult Function(File file) changeProfileImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadUserData,
+    TResult? Function(File file)? changeProfileImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadUserData,
+    TResult Function(File file)? changeProfileImage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadUserData value) loadUserData,
+    required TResult Function(ChangeProfileImage value) changeProfileImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadUserData value)? loadUserData,
+    TResult? Function(ChangeProfileImage value)? changeProfileImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadUserData value)? loadUserData,
+    TResult Function(ChangeProfileImage value)? changeProfileImage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -107,6 +113,7 @@ class _$LoadUserData implements LoadUserData {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadUserData,
+    required TResult Function(File file) changeProfileImage,
   }) {
     return loadUserData();
   }
@@ -115,6 +122,7 @@ class _$LoadUserData implements LoadUserData {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadUserData,
+    TResult? Function(File file)? changeProfileImage,
   }) {
     return loadUserData?.call();
   }
@@ -123,6 +131,7 @@ class _$LoadUserData implements LoadUserData {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadUserData,
+    TResult Function(File file)? changeProfileImage,
     required TResult orElse(),
   }) {
     if (loadUserData != null) {
@@ -135,6 +144,7 @@ class _$LoadUserData implements LoadUserData {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadUserData value) loadUserData,
+    required TResult Function(ChangeProfileImage value) changeProfileImage,
   }) {
     return loadUserData(this);
   }
@@ -143,6 +153,7 @@ class _$LoadUserData implements LoadUserData {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadUserData value)? loadUserData,
+    TResult? Function(ChangeProfileImage value)? changeProfileImage,
   }) {
     return loadUserData?.call(this);
   }
@@ -151,6 +162,7 @@ class _$LoadUserData implements LoadUserData {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadUserData value)? loadUserData,
+    TResult Function(ChangeProfileImage value)? changeProfileImage,
     required TResult orElse(),
   }) {
     if (loadUserData != null) {
@@ -162,6 +174,141 @@ class _$LoadUserData implements LoadUserData {
 
 abstract class LoadUserData implements AccountEvent {
   const factory LoadUserData() = _$LoadUserData;
+}
+
+/// @nodoc
+abstract class _$$ChangeProfileImageCopyWith<$Res> {
+  factory _$$ChangeProfileImageCopyWith(_$ChangeProfileImage value,
+          $Res Function(_$ChangeProfileImage) then) =
+      __$$ChangeProfileImageCopyWithImpl<$Res>;
+  @useResult
+  $Res call({File file});
+}
+
+/// @nodoc
+class __$$ChangeProfileImageCopyWithImpl<$Res>
+    extends _$AccountEventCopyWithImpl<$Res, _$ChangeProfileImage>
+    implements _$$ChangeProfileImageCopyWith<$Res> {
+  __$$ChangeProfileImageCopyWithImpl(
+      _$ChangeProfileImage _value, $Res Function(_$ChangeProfileImage) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? file = null,
+  }) {
+    return _then(_$ChangeProfileImage(
+      file: null == file
+          ? _value.file
+          : file // ignore: cast_nullable_to_non_nullable
+              as File,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ChangeProfileImage implements ChangeProfileImage {
+  const _$ChangeProfileImage({required this.file});
+
+  @override
+  final File file;
+
+  @override
+  String toString() {
+    return 'AccountEvent.changeProfileImage(file: $file)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeProfileImage &&
+            (identical(other.file, file) || other.file == file));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, file);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChangeProfileImageCopyWith<_$ChangeProfileImage> get copyWith =>
+      __$$ChangeProfileImageCopyWithImpl<_$ChangeProfileImage>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loadUserData,
+    required TResult Function(File file) changeProfileImage,
+  }) {
+    return changeProfileImage(file);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loadUserData,
+    TResult? Function(File file)? changeProfileImage,
+  }) {
+    return changeProfileImage?.call(file);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loadUserData,
+    TResult Function(File file)? changeProfileImage,
+    required TResult orElse(),
+  }) {
+    if (changeProfileImage != null) {
+      return changeProfileImage(file);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LoadUserData value) loadUserData,
+    required TResult Function(ChangeProfileImage value) changeProfileImage,
+  }) {
+    return changeProfileImage(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LoadUserData value)? loadUserData,
+    TResult? Function(ChangeProfileImage value)? changeProfileImage,
+  }) {
+    return changeProfileImage?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoadUserData value)? loadUserData,
+    TResult Function(ChangeProfileImage value)? changeProfileImage,
+    required TResult orElse(),
+  }) {
+    if (changeProfileImage != null) {
+      return changeProfileImage(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ChangeProfileImage implements AccountEvent {
+  const factory ChangeProfileImage({required final File file}) =
+      _$ChangeProfileImage;
+
+  File get file;
+  @JsonKey(ignore: true)
+  _$$ChangeProfileImageCopyWith<_$ChangeProfileImage> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

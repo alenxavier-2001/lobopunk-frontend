@@ -8,3 +8,12 @@ final getIt = GetIt.instance;
 Future<void> configureInjection() async {
   await $initGetIt(getIt, environment: Environment.prod);
 }
+
+// final getIt = GetIt.instance;
+
+// @InjectableInit(
+//   initializerName: 'init', // default
+//   preferRelativeImports: true, // default
+//   asExtension: false, // default
+// )
+// void configureDependencies() => getIt.init();

@@ -1,11 +1,15 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lobopunk/application/account/account_bloc.dart';
+import 'package:lobopunk/core/contasts.dart';
 import 'package:lobopunk/domain/user/user_model/user_model.dart';
 import 'package:lobopunk/infrastructure/auth/auth_impl.dart';
+import 'package:lobopunk/infrastructure/file_picker_impl/file_picker_impl.dart';
+import 'package:lobopunk/infrastructure/userdetails/user_impl.dart';
 
 import 'package:lobopunk/presentation/auth/signin/signin.dart';
 
@@ -15,6 +19,8 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       BlocProvider.of<AccountBloc>(context).add(const LoadUserData());
     });
@@ -35,27 +41,54 @@ class AccountScreen extends StatelessWidget {
               child: Text("Error Occur"),
             );
           } else {
-            UserModel model = state.userDetails;
-            return Column(
-              children: [
-                Text(model.email.toString()),
-                Text(model.id.toString()),
-                Text(model.name.toString()),
-                Text(model.username.toString()),
-                ElevatedButton(
-                    onPressed: () async {
-                      final res = await AuthImplementation().signOut();
-                      res.fold((l) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('some error')));
-                      }, (bool r) {
-                        log("dchdc  dc");
-                        Navigator.pushReplacementNamed(
-                            context, SignInScreen.routeName);
-                      });
-                    },
-                    child: const Text("Log out")),
-              ],
+            UserModel usedata = state.userDetails;
+            log("$kBaseurl${usedata.profileimage}");
+            return Padding(
+              padding: EdgeInsets.all(width / 50),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: InkWell(
+                      onTap: () async {
+                        final res = await FilePickerImplementation().addImage();
+                        res.fold((l) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('some error')));
+                        }, (File file) async {
+                          BlocProvider.of<AccountBloc>(context)
+                              .add(ChangeProfileImage(file: file));
+                        });
+                      },
+                      child: CircleAvatar(
+                        radius: width / 6,
+                        backgroundColor: Colors.grey.shade200,
+                        backgroundImage: (usedata.profileimage == "" ||
+                                usedata.profileimage == null)
+                            ? null
+                            : NetworkImage("$kBaseurl${usedata.profileimage}"),
+                      ),
+                    ),
+                  ),
+                  Text(usedata.email.toString()),
+                  Text(usedata.id.toString()),
+                  Text(usedata.name.toString()),
+                  Text(usedata.username.toString()),
+                  ElevatedButton(
+                      onPressed: () async {
+                        final res = await AuthImplementation().signOut();
+                        res.fold((l) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('some error')));
+                        }, (bool r) {
+                          log("dchdc  dc");
+                          Navigator.pushReplacementNamed(
+                              context, SignInScreen.routeName);
+                        });
+                      },
+                      child: const Text("Log out")),
+                ],
+              ),
             );
           }
         },
