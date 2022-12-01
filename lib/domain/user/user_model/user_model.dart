@@ -4,14 +4,20 @@ part 'user_model.g.dart';
 
 @JsonSerializable()
 class UserModel {
+  String? token;
   String? username;
   String? name;
   String? email;
   String? password;
+  String? bio;
   String? phonenumber;
   String? profileimage;
-  List<dynamic>? subscribers;
-  List<dynamic>? subscribed;
+  List<dynamic>? socailmedialinks;
+  List<dynamic>? punkers;
+  List<dynamic>? punking;
+  String? profiletheme;
+  String? thememusic;
+  int? totallikes;
   List<dynamic>? likedposts;
   List<dynamic>? savedposts;
   List<dynamic>? myposts;
@@ -23,14 +29,20 @@ class UserModel {
   int? v;
 
   UserModel({
+    this.token,
     this.username,
     this.name,
     this.email,
     this.password,
+    this.bio,
     this.phonenumber,
     this.profileimage,
-    this.subscribers,
-    this.subscribed,
+    this.socailmedialinks,
+    this.punkers,
+    this.punking,
+    this.profiletheme,
+    this.thememusic,
+    this.totallikes,
     this.likedposts,
     this.savedposts,
     this.myposts,

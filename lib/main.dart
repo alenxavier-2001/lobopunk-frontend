@@ -44,7 +44,8 @@ class MyApp extends StatelessWidget {
           textTheme: const TextTheme(
             bodyMedium:
                 TextStyle(color: Colors.white, fontWeight: FontWeight.w400),
-            headlineMedium: TextStyle(color: Colors.white),
+            headlineMedium:
+                TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
           ),
 
           // This is the theme of your application.

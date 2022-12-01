@@ -61,7 +61,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         // final state2 = state;
         // state2.userDetails.profileimage = path;
         // return state2;
-       return state.copyWith(userDetails: resp);
+        return state.copyWith(userDetails: resp);
       });
       emit(newState);
     });

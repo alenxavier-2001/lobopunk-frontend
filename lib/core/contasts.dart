@@ -9,5 +9,3 @@ const kBaseurl = "http://192.168.137.1:3000/api/";
 //AWS
 
 //const kBaseurl = "http://13.235.115.145:3000/api/";
-
-

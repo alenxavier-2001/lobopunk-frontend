@@ -36,7 +36,7 @@ class FilePickerImplementation extends FilePickerServices {
       return Right(file);
     } catch (e) {
       log(e.toString());
-      return const Left(MainFailure.clientFailure());
+      return Left(MainFailure.clientFailure(e.toString()));
     }
   }
 }

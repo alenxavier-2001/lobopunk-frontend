@@ -10,6 +10,7 @@ import 'package:lobopunk/domain/auth/auth_services.dart';
 import 'package:lobopunk/domain/core/api_end_points.dart';
 import 'package:lobopunk/domain/core/failures/main_failure.dart';
 import 'package:http/http.dart' as http;
+import 'package:lobopunk/domain/core/failures/server_error_model/server_error_model.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,11 +34,12 @@ class AuthImplementation implements AuthService {
         const result = false;
         return const Right(result);
       } else {
-        return const Left(MainFailure.serverFailure());
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
       }
     } catch (e) {
       log(e.toString());
-      return const Left(MainFailure.clientFailure());
+      return Left(MainFailure.clientFailure(e.toString()));
     }
   }
 
@@ -46,17 +48,21 @@ class AuthImplementation implements AuthService {
     try {
       final url = Uri.parse("${ApiEndPoints.auth}signup");
       var body = data;
-      final response =
-          await http.post(url, headers: <String, String>{}, body: body);
+      final response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         final result = AuthModel.fromJson(jsonDecode(response.body));
         return Right(result);
       } else {
-        return const Left(MainFailure.serverFailure());
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
       }
     } catch (e) {
       log(e.toString());
-      return const Left(MainFailure.clientFailure());
+      return Left(MainFailure.clientFailure(e.toString()));
     }
   }
 
@@ -65,17 +71,21 @@ class AuthImplementation implements AuthService {
     try {
       final url = Uri.parse("${ApiEndPoints.auth}signin");
       var body = data;
-      final response =
-          await http.post(url, headers: <String, String>{}, body: body);
+      final response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         final result = AuthModel.fromJson(jsonDecode(response.body));
         return Right(result);
       } else {
-        return const Left(MainFailure.serverFailure());
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
       }
     } catch (e) {
       log(e.toString());
-      return const Left(MainFailure.clientFailure());
+      return Left(MainFailure.clientFailure(e.toString()));
     }
   }
 
@@ -91,11 +101,12 @@ class AuthImplementation implements AuthService {
 
         return Right(result);
       } else {
-        return const Left(MainFailure.serverFailure());
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
       }
     } catch (e) {
       log(e.toString());
-      return const Left(MainFailure.clientFailure());
+      return Left(MainFailure.clientFailure(e.toString()));
     }
   }
 
@@ -109,7 +120,7 @@ class AuthImplementation implements AuthService {
       return right(true);
     } catch (e) {
       log(e.toString());
-      return const Left(MainFailure.clientFailure());
+      return Left(MainFailure.clientFailure(e.toString()));
     }
   }
 }

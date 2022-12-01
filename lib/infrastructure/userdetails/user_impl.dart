@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:lobopunk/domain/core/api_end_points.dart';
+import 'package:lobopunk/domain/core/failures/server_error_model/server_error_model.dart';
 import 'package:lobopunk/domain/user/user_model/user_model.dart';
 import 'package:lobopunk/domain/core/failures/main_failure.dart';
 import 'package:dartz/dartz.dart';
@@ -42,7 +43,8 @@ class UserImplementation extends UserServices {
 
         return Right(UserModel.fromJson(data));
       } else {
-        return const Left(MainFailure.serverFailure());
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel(msg: "Some Error in upload")));
       }
       // .then((response) async {
       //   if (response.statusCode == 200 || response.statusCode == 201) {
@@ -59,7 +61,7 @@ class UserImplementation extends UserServices {
       // return Right(UserModel.fromJson(data));
     } catch (e) {
       log(e.toString());
-      return const Left(MainFailure.clientFailure());
+      return Left(MainFailure.clientFailure(e.toString()));
     }
   }
 
@@ -71,18 +73,21 @@ class UserImplementation extends UserServices {
       final url = Uri.parse(ApiEndPoints.getuserdata);
       final response = await http.get(
         url,
-        headers: <String, String>{'x-auth-token': token},
+        headers: <String, String>{
+          'x-auth-token': token,
+        },
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final result = UserModel.fromJson(jsonDecode(response.body));
         return Right(result);
       } else {
-        return const Left(MainFailure.serverFailure());
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
       }
     } catch (e) {
       log(e.toString());
-      return const Left(MainFailure.clientFailure());
+      return Left(MainFailure.clientFailure(e.toString()));
     }
   }
 }
