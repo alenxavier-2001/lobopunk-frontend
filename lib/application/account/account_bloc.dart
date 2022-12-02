@@ -89,7 +89,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
 
       // //get user data
 
-      final result = await _userService.editProfile(data: event.data);
+      final result = await _userService.editSocialLink(data: event.data);
 
       // //data to state
 
