@@ -6,4 +6,10 @@ class AccountEvent with _$AccountEvent {
   const factory AccountEvent.changeProfileImage({
     required File file,
   }) = ChangeProfileImage;
+  const factory AccountEvent.editProfile({
+    required Map<String, dynamic> data,
+  }) = EditProfile;
+  const factory AccountEvent.editSocialLink({
+    required Map<String, dynamic> data,
+  }) = EditSocialLink;
 }

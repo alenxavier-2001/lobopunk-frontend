@@ -10,10 +10,12 @@ import 'package:lobopunk/domain/posts/post_model/post_model.dart';
 import 'package:lobopunk/infrastructure/addpost/addpost_impl.dart';
 import 'package:lobopunk/presentation/addpost/addpost.dart';
 import 'package:http/http.dart' as http;
+import 'package:lobopunk/widgets/custom_loader.dart';
 import 'package:lobopunk/widgets/like_animation.dart';
 import 'package:lobopunk/widgets/post_bottom_widget.dart';
 import 'package:lobopunk/widgets/post_side_bar.dart';
 import 'package:lobopunk/widgets/video_tile_widget.dart';
+import 'package:lottie/lottie.dart';
 
 List videoslist = [
   /*'https://player.vimeo.com/external/530280164.sd.mp4?s=45dc172418894ec2e2c0ab0ecf01b5eb1e1482ae&profile_id=165&oauth2_token_id=57447761',
@@ -55,6 +57,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
+
       /*  body: Column(
         children: [
           ElevatedButton(
@@ -74,17 +77,19 @@ class HomeScreen extends StatelessWidget {
         ],
       ),*/
 
-      body: PageView.builder(
-          onPageChanged: (int page) {
-            snappedindexhome.value = page;
-          },
-          scrollDirection: Axis.vertical,
-          itemCount: videoslist.length,
-          itemBuilder: (context, index) {
-            return PostWidget(
-              index: index,
-            );
-          }),
+      body: CustomLoader(),
+
+      // body: PageView.builder(
+      //     onPageChanged: (int page) {
+      //       snappedindexhome.value = page;
+      //     },
+      //     scrollDirection: Axis.vertical,
+      //     itemCount: videoslist.length,
+      //     itemBuilder: (context, index) {
+      //       return PostWidget(
+      //         index: index,
+      //       );
+      //     }),
     );
   }
 }

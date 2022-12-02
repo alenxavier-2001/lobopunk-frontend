@@ -6,5 +6,10 @@ import 'package:lobopunk/domain/user/user_model/user_model.dart';
 
 abstract class UserServices {
   Future<Either<MainFailure, UserModel>> uploadProfilePic({required File file});
+  Future<Either<MainFailure, UserModel>> editProfile(
+      {required Map<String, dynamic> data});
+
+  Future<Either<MainFailure, UserModel>> editSocialLink(
+      {required Map<String, dynamic> data});
   Future<Either<MainFailure, UserModel>> getUseData();
 }

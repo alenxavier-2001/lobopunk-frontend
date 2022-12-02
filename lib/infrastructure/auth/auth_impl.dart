@@ -50,7 +50,7 @@ class AuthImplementation implements AuthService {
       var body = data;
       final response = await http.post(url,
           headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
+            // 'Content-Type': 'application/json; charset=UTF-8',
           },
           body: body);
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -73,7 +73,7 @@ class AuthImplementation implements AuthService {
       var body = data;
       final response = await http.post(url,
           headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
+            //'Content-Type': 'application/json; charset=UTF-8',
           },
           body: body);
       if (response.statusCode == 200 || response.statusCode == 201) {

@@ -33,6 +33,12 @@ class TextFormFieldCurvedWidget extends StatelessWidget {
         }
         return null;
       },
+      inputFormatters: (username)
+          ? [
+              // is able to enter lowercase letters
+              FilteringTextInputFormatter.allow(RegExp("[a-z_.0-9]")),
+            ]
+          : null,
       keyboardType: keyboard,
       maxLength: username ? 18 : 50,
       decoration: InputDecoration(

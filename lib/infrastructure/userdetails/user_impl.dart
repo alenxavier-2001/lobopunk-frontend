@@ -75,9 +75,64 @@ class UserImplementation extends UserServices {
         url,
         headers: <String, String>{
           'x-auth-token': token,
+          // 'Content-Type': 'application/json; charset=UTF-8',
         },
       );
 
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final result = UserModel.fromJson(jsonDecode(response.body));
+        return Right(result);
+      } else {
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
+      }
+    } catch (e) {
+      log(e.toString());
+      return Left(MainFailure.clientFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<MainFailure, UserModel>> editProfile(
+      {required Map<String, dynamic> data}) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String token = prefs.getString('token') ?? "";
+      final url = Uri.parse(ApiEndPoints.updateuserdata);
+      var body = data;
+      final response = await http.post(url,
+          headers: <String, String>{
+            'x-auth-token': token,
+            // 'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final result = UserModel.fromJson(jsonDecode(response.body));
+        return Right(result);
+      } else {
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
+      }
+    } catch (e) {
+      log(e.toString());
+      return Left(MainFailure.clientFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<MainFailure, UserModel>> editSocialLink(
+      {required Map<String, dynamic> data}) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String token = prefs.getString('token') ?? "";
+      final url = Uri.parse(ApiEndPoints.updateusersociallink);
+      var body = data;
+      final response = await http.post(url,
+          headers: <String, String>{
+            'x-auth-token': token,
+            // 'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         final result = UserModel.fromJson(jsonDecode(response.body));
         return Right(result);

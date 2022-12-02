@@ -6,6 +6,7 @@ import 'package:lobopunk/infrastructure/auth/auth_impl.dart';
 import 'package:lobopunk/presentation/account/account_screen.dart';
 import 'package:lobopunk/presentation/auth/signup/signup.dart';
 import 'package:lobopunk/presentation/main_page/main_page_screen.dart';
+import 'package:lobopunk/widgets/custom_loader.dart';
 import 'package:lobopunk/widgets/mysizedbox.dart';
 import 'package:lobopunk/widgets/mysizedbox70.dart';
 import 'package:lobopunk/widgets/passwordtextfeild.dart';
@@ -127,11 +128,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         showDialog(
                             context: context,
                             builder: (context) {
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 1,
-                                ),
-                              );
+                              return const CustomLoader();
                             });
                         Map data = {
                           "email": emailController.text.toString(),
@@ -149,8 +146,10 @@ class _SignInScreenState extends State<SignInScreen> {
                           final prefs = await SharedPreferences.getInstance();
                           await prefs.setString('token', token).then((_) {
                             Navigator.pop(context);
-                            Navigator.pushReplacementNamed(
-                                context, MainPageScreen.routeName);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MainPageScreen()));
                           });
                         });
                       } else {

@@ -40,9 +40,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     on<ChangeProfileImage>((event, emit) async {
       //send loading to UI
       emit(AccountState(
-          isLoading: state.isLoading,
-          hasError: state.hasError,
-          userDetails: state.userDetails));
+          isLoading: true, hasError: false, userDetails: UserModel()));
 
       // //get user data
 
@@ -55,13 +53,53 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         return AccountState(
             isLoading: false, hasError: true, userDetails: UserModel());
       }, (UserModel resp) {
-        // // log("Success ${state.userDetails.toString()}");
-        // // // log(state.toString());
-        // String path = resp.profileimage.toString();
-        // final state2 = state;
-        // state2.userDetails.profileimage = path;
-        // return state2;
-        return state.copyWith(userDetails: resp);
+        return AccountState(
+            isLoading: false, hasError: false, userDetails: resp);
+      });
+      emit(newState);
+    });
+
+    //update user info
+
+    on<EditProfile>((event, emit) async {
+      //send loading to UI
+      emit(AccountState(
+          isLoading: true, hasError: false, userDetails: UserModel()));
+
+      // //get user data
+
+      final result = await _userService.editProfile(data: event.data);
+
+      // //data to state
+
+      final newState = result.fold((MainFailure failure) {
+        log("Failure");
+        return AccountState(
+            isLoading: false, hasError: true, userDetails: UserModel());
+      }, (UserModel resp) {
+        return AccountState(
+            isLoading: false, hasError: false, userDetails: resp);
+      });
+      emit(newState);
+    });
+    on<EditSocialLink>((event, emit) async {
+      //send loading to UI
+      emit(AccountState(
+          isLoading: true, hasError: false, userDetails: UserModel()));
+
+      // //get user data
+
+      final result = await _userService.editProfile(data: event.data);
+
+      // //data to state
+
+      final newState = result.fold((MainFailure failure) {
+        log("Failure");
+        return AccountState(
+            isLoading: false, hasError: true, userDetails: UserModel());
+      }, (UserModel resp) {
+        return AccountState(
+            isLoading: false, hasError: false, userDetails: resp);
       });
       emit(newState);
     });

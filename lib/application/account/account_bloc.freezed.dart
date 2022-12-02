@@ -20,18 +20,24 @@ mixin _$AccountEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() loadUserData,
     required TResult Function(File file) changeProfileImage,
+    required TResult Function(Map<String, dynamic> data) editProfile,
+    required TResult Function(Map<String, dynamic> data) editSocialLink,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadUserData,
     TResult? Function(File file)? changeProfileImage,
+    TResult? Function(Map<String, dynamic> data)? editProfile,
+    TResult? Function(Map<String, dynamic> data)? editSocialLink,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadUserData,
     TResult Function(File file)? changeProfileImage,
+    TResult Function(Map<String, dynamic> data)? editProfile,
+    TResult Function(Map<String, dynamic> data)? editSocialLink,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +45,24 @@ mixin _$AccountEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(LoadUserData value) loadUserData,
     required TResult Function(ChangeProfileImage value) changeProfileImage,
+    required TResult Function(EditProfile value) editProfile,
+    required TResult Function(EditSocialLink value) editSocialLink,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadUserData value)? loadUserData,
     TResult? Function(ChangeProfileImage value)? changeProfileImage,
+    TResult? Function(EditProfile value)? editProfile,
+    TResult? Function(EditSocialLink value)? editSocialLink,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadUserData value)? loadUserData,
     TResult Function(ChangeProfileImage value)? changeProfileImage,
+    TResult Function(EditProfile value)? editProfile,
+    TResult Function(EditSocialLink value)? editSocialLink,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,6 +126,8 @@ class _$LoadUserData implements LoadUserData {
   TResult when<TResult extends Object?>({
     required TResult Function() loadUserData,
     required TResult Function(File file) changeProfileImage,
+    required TResult Function(Map<String, dynamic> data) editProfile,
+    required TResult Function(Map<String, dynamic> data) editSocialLink,
   }) {
     return loadUserData();
   }
@@ -123,6 +137,8 @@ class _$LoadUserData implements LoadUserData {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadUserData,
     TResult? Function(File file)? changeProfileImage,
+    TResult? Function(Map<String, dynamic> data)? editProfile,
+    TResult? Function(Map<String, dynamic> data)? editSocialLink,
   }) {
     return loadUserData?.call();
   }
@@ -132,6 +148,8 @@ class _$LoadUserData implements LoadUserData {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadUserData,
     TResult Function(File file)? changeProfileImage,
+    TResult Function(Map<String, dynamic> data)? editProfile,
+    TResult Function(Map<String, dynamic> data)? editSocialLink,
     required TResult orElse(),
   }) {
     if (loadUserData != null) {
@@ -145,6 +163,8 @@ class _$LoadUserData implements LoadUserData {
   TResult map<TResult extends Object?>({
     required TResult Function(LoadUserData value) loadUserData,
     required TResult Function(ChangeProfileImage value) changeProfileImage,
+    required TResult Function(EditProfile value) editProfile,
+    required TResult Function(EditSocialLink value) editSocialLink,
   }) {
     return loadUserData(this);
   }
@@ -154,6 +174,8 @@ class _$LoadUserData implements LoadUserData {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadUserData value)? loadUserData,
     TResult? Function(ChangeProfileImage value)? changeProfileImage,
+    TResult? Function(EditProfile value)? editProfile,
+    TResult? Function(EditSocialLink value)? editSocialLink,
   }) {
     return loadUserData?.call(this);
   }
@@ -163,6 +185,8 @@ class _$LoadUserData implements LoadUserData {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadUserData value)? loadUserData,
     TResult Function(ChangeProfileImage value)? changeProfileImage,
+    TResult Function(EditProfile value)? editProfile,
+    TResult Function(EditSocialLink value)? editSocialLink,
     required TResult orElse(),
   }) {
     if (loadUserData != null) {
@@ -243,6 +267,8 @@ class _$ChangeProfileImage implements ChangeProfileImage {
   TResult when<TResult extends Object?>({
     required TResult Function() loadUserData,
     required TResult Function(File file) changeProfileImage,
+    required TResult Function(Map<String, dynamic> data) editProfile,
+    required TResult Function(Map<String, dynamic> data) editSocialLink,
   }) {
     return changeProfileImage(file);
   }
@@ -252,6 +278,8 @@ class _$ChangeProfileImage implements ChangeProfileImage {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadUserData,
     TResult? Function(File file)? changeProfileImage,
+    TResult? Function(Map<String, dynamic> data)? editProfile,
+    TResult? Function(Map<String, dynamic> data)? editSocialLink,
   }) {
     return changeProfileImage?.call(file);
   }
@@ -261,6 +289,8 @@ class _$ChangeProfileImage implements ChangeProfileImage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadUserData,
     TResult Function(File file)? changeProfileImage,
+    TResult Function(Map<String, dynamic> data)? editProfile,
+    TResult Function(Map<String, dynamic> data)? editSocialLink,
     required TResult orElse(),
   }) {
     if (changeProfileImage != null) {
@@ -274,6 +304,8 @@ class _$ChangeProfileImage implements ChangeProfileImage {
   TResult map<TResult extends Object?>({
     required TResult Function(LoadUserData value) loadUserData,
     required TResult Function(ChangeProfileImage value) changeProfileImage,
+    required TResult Function(EditProfile value) editProfile,
+    required TResult Function(EditSocialLink value) editSocialLink,
   }) {
     return changeProfileImage(this);
   }
@@ -283,6 +315,8 @@ class _$ChangeProfileImage implements ChangeProfileImage {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadUserData value)? loadUserData,
     TResult? Function(ChangeProfileImage value)? changeProfileImage,
+    TResult? Function(EditProfile value)? editProfile,
+    TResult? Function(EditSocialLink value)? editSocialLink,
   }) {
     return changeProfileImage?.call(this);
   }
@@ -292,6 +326,8 @@ class _$ChangeProfileImage implements ChangeProfileImage {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadUserData value)? loadUserData,
     TResult Function(ChangeProfileImage value)? changeProfileImage,
+    TResult Function(EditProfile value)? editProfile,
+    TResult Function(EditSocialLink value)? editSocialLink,
     required TResult orElse(),
   }) {
     if (changeProfileImage != null) {
@@ -308,6 +344,310 @@ abstract class ChangeProfileImage implements AccountEvent {
   File get file;
   @JsonKey(ignore: true)
   _$$ChangeProfileImageCopyWith<_$ChangeProfileImage> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EditProfileCopyWith<$Res> {
+  factory _$$EditProfileCopyWith(
+          _$EditProfile value, $Res Function(_$EditProfile) then) =
+      __$$EditProfileCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Map<String, dynamic> data});
+}
+
+/// @nodoc
+class __$$EditProfileCopyWithImpl<$Res>
+    extends _$AccountEventCopyWithImpl<$Res, _$EditProfile>
+    implements _$$EditProfileCopyWith<$Res> {
+  __$$EditProfileCopyWithImpl(
+      _$EditProfile _value, $Res Function(_$EditProfile) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = null,
+  }) {
+    return _then(_$EditProfile(
+      data: null == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EditProfile implements EditProfile {
+  const _$EditProfile({required final Map<String, dynamic> data})
+      : _data = data;
+
+  final Map<String, dynamic> _data;
+  @override
+  Map<String, dynamic> get data {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_data);
+  }
+
+  @override
+  String toString() {
+    return 'AccountEvent.editProfile(data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EditProfile &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_data));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EditProfileCopyWith<_$EditProfile> get copyWith =>
+      __$$EditProfileCopyWithImpl<_$EditProfile>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loadUserData,
+    required TResult Function(File file) changeProfileImage,
+    required TResult Function(Map<String, dynamic> data) editProfile,
+    required TResult Function(Map<String, dynamic> data) editSocialLink,
+  }) {
+    return editProfile(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loadUserData,
+    TResult? Function(File file)? changeProfileImage,
+    TResult? Function(Map<String, dynamic> data)? editProfile,
+    TResult? Function(Map<String, dynamic> data)? editSocialLink,
+  }) {
+    return editProfile?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loadUserData,
+    TResult Function(File file)? changeProfileImage,
+    TResult Function(Map<String, dynamic> data)? editProfile,
+    TResult Function(Map<String, dynamic> data)? editSocialLink,
+    required TResult orElse(),
+  }) {
+    if (editProfile != null) {
+      return editProfile(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LoadUserData value) loadUserData,
+    required TResult Function(ChangeProfileImage value) changeProfileImage,
+    required TResult Function(EditProfile value) editProfile,
+    required TResult Function(EditSocialLink value) editSocialLink,
+  }) {
+    return editProfile(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LoadUserData value)? loadUserData,
+    TResult? Function(ChangeProfileImage value)? changeProfileImage,
+    TResult? Function(EditProfile value)? editProfile,
+    TResult? Function(EditSocialLink value)? editSocialLink,
+  }) {
+    return editProfile?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoadUserData value)? loadUserData,
+    TResult Function(ChangeProfileImage value)? changeProfileImage,
+    TResult Function(EditProfile value)? editProfile,
+    TResult Function(EditSocialLink value)? editSocialLink,
+    required TResult orElse(),
+  }) {
+    if (editProfile != null) {
+      return editProfile(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EditProfile implements AccountEvent {
+  const factory EditProfile({required final Map<String, dynamic> data}) =
+      _$EditProfile;
+
+  Map<String, dynamic> get data;
+  @JsonKey(ignore: true)
+  _$$EditProfileCopyWith<_$EditProfile> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EditSocialLinkCopyWith<$Res> {
+  factory _$$EditSocialLinkCopyWith(
+          _$EditSocialLink value, $Res Function(_$EditSocialLink) then) =
+      __$$EditSocialLinkCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Map<String, dynamic> data});
+}
+
+/// @nodoc
+class __$$EditSocialLinkCopyWithImpl<$Res>
+    extends _$AccountEventCopyWithImpl<$Res, _$EditSocialLink>
+    implements _$$EditSocialLinkCopyWith<$Res> {
+  __$$EditSocialLinkCopyWithImpl(
+      _$EditSocialLink _value, $Res Function(_$EditSocialLink) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = null,
+  }) {
+    return _then(_$EditSocialLink(
+      data: null == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EditSocialLink implements EditSocialLink {
+  const _$EditSocialLink({required final Map<String, dynamic> data})
+      : _data = data;
+
+  final Map<String, dynamic> _data;
+  @override
+  Map<String, dynamic> get data {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_data);
+  }
+
+  @override
+  String toString() {
+    return 'AccountEvent.editSocialLink(data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EditSocialLink &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_data));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EditSocialLinkCopyWith<_$EditSocialLink> get copyWith =>
+      __$$EditSocialLinkCopyWithImpl<_$EditSocialLink>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loadUserData,
+    required TResult Function(File file) changeProfileImage,
+    required TResult Function(Map<String, dynamic> data) editProfile,
+    required TResult Function(Map<String, dynamic> data) editSocialLink,
+  }) {
+    return editSocialLink(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loadUserData,
+    TResult? Function(File file)? changeProfileImage,
+    TResult? Function(Map<String, dynamic> data)? editProfile,
+    TResult? Function(Map<String, dynamic> data)? editSocialLink,
+  }) {
+    return editSocialLink?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loadUserData,
+    TResult Function(File file)? changeProfileImage,
+    TResult Function(Map<String, dynamic> data)? editProfile,
+    TResult Function(Map<String, dynamic> data)? editSocialLink,
+    required TResult orElse(),
+  }) {
+    if (editSocialLink != null) {
+      return editSocialLink(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LoadUserData value) loadUserData,
+    required TResult Function(ChangeProfileImage value) changeProfileImage,
+    required TResult Function(EditProfile value) editProfile,
+    required TResult Function(EditSocialLink value) editSocialLink,
+  }) {
+    return editSocialLink(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LoadUserData value)? loadUserData,
+    TResult? Function(ChangeProfileImage value)? changeProfileImage,
+    TResult? Function(EditProfile value)? editProfile,
+    TResult? Function(EditSocialLink value)? editSocialLink,
+  }) {
+    return editSocialLink?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoadUserData value)? loadUserData,
+    TResult Function(ChangeProfileImage value)? changeProfileImage,
+    TResult Function(EditProfile value)? editProfile,
+    TResult Function(EditSocialLink value)? editSocialLink,
+    required TResult orElse(),
+  }) {
+    if (editSocialLink != null) {
+      return editSocialLink(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EditSocialLink implements AccountEvent {
+  const factory EditSocialLink({required final Map<String, dynamic> data}) =
+      _$EditSocialLink;
+
+  Map<String, dynamic> get data;
+  @JsonKey(ignore: true)
+  _$$EditSocialLinkCopyWith<_$EditSocialLink> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
