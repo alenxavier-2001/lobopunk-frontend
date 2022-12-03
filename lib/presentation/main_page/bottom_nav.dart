@@ -1,6 +1,12 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-ValueNotifier<int> indexChangeNotifier = ValueNotifier(0);
+import 'package:flutter/material.dart';
+import 'package:lobopunk/core/basic_scafoldmsg.dart';
+import 'package:lobopunk/domain/core/failures/server_error_model/server_error_model.dart';
+import 'package:lobopunk/infrastructure/addpost/addpost_impl.dart';
+import 'package:lobopunk/presentation/addpost/addpost.dart';
+
+ValueNotifier<int> navIndexChangeNotifier = ValueNotifier(0);
 
 class BottomNavigation extends StatelessWidget {
   const BottomNavigation({super.key});
@@ -9,11 +15,32 @@ class BottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return ValueListenableBuilder(
-        valueListenable: indexChangeNotifier,
+        valueListenable: navIndexChangeNotifier,
         builder: ((context, int newIndex, _) {
           return BottomNavigationBar(
-            onTap: ((indexvalue) {
-              indexChangeNotifier.value = indexvalue;
+            onTap: ((indexvalue) async {
+              if (indexvalue == 2) {
+                final res = await AddPostImplementation().addPostVideo();
+                res.fold((l) {
+                  l.whenOrNull(
+                    clientFailure: (String msg) {
+                      basicScaffoldmsg(context, msg);
+                      navIndexChangeNotifier.value = 0;
+                    },
+                    serverFailure: (ServerErrorModel msg) {
+                      basicScaffoldmsg(context, msg.msg.toString());
+                      navIndexChangeNotifier.value = 0;
+                    },
+                  );
+                }, (File file) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddPostScreen(file: file)));
+                });
+              } else {
+                navIndexChangeNotifier.value = indexvalue;
+              }
             }),
             currentIndex: newIndex,
             elevation: 0,

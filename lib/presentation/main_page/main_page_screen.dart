@@ -25,7 +25,7 @@ class MainPageScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: ValueListenableBuilder(
-        valueListenable: indexChangeNotifier,
+        valueListenable: navIndexChangeNotifier,
         builder: ((context, int index, _) {
           return _pages[index];
         }),

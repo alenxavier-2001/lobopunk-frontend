@@ -11,6 +11,7 @@ class UserModel {
   String? bio;
   String? phonenumber;
   String? profileimage;
+  bool? isverified;
   List<dynamic>? socailmedialinks;
   List<dynamic>? punkers;
   List<dynamic>? punking;
@@ -32,6 +33,7 @@ class UserModel {
     this.bio,
     this.phonenumber,
     this.profileimage,
+    this.isverified,
     this.socailmedialinks,
     this.punkers,
     this.punking,
