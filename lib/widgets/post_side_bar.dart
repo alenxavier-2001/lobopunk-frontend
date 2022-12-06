@@ -1,6 +1,9 @@
-import 'dart:math';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:lobopunk/widgets/like_animation.dart';
+import 'package:lobopunk/widgets/mysizedbox.dart';
+import 'package:lobopunk/widgets/mysizedbox70.dart';
 
 String imgurl1 =
     "https://media.zigcdn.com/media/content/2022/May/179348629-210414-01_002-1200x493_720x540.jpg";
@@ -16,23 +19,48 @@ class PostSideBar extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.end,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _profileImageButton(),
-        likeButtonWidget,
-        Icon(
-          Icons.comment,
-          size: 40,
-        ),
-        Icon(
-          Icons.share,
-          size: 40,
-        ),
-        SizedBox(
-          height: height / 50,
-          width: width / 7,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.monetization_on_outlined,
+                size: width / 11,
+                color: Colors.white,
+              ),
+            ),
+            const MySizedBox70(),
+            likeButtonWidget,
+            const MySizedBox70(),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.heart_broken_outlined,
+                size: width / 11,
+                color: Colors.white,
+              ),
+            ),
+            const MySizedBox70(),
+            InkWell(
+              onTap: () {},
+              child: Transform.rotate(
+                angle: 180 * math.pi / 100,
+                child: Icon(
+                  Icons.send_outlined,
+                  size: width / 12,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            const MySizedBox(),
+            const MySizedBox(),
+            const MySizedBox(),
+          ],
         ),
       ],
     );
@@ -115,7 +143,7 @@ class _AnimatedRoundWidgetState extends State<AnimatedRoundWidget>
       ]),
       builder: (context, child) {
         return Transform.rotate(
-          angle: 2 * pi * _animationController.value,
+          angle: 2 * math.pi * _animationController.value,
           child: child,
         );
       },

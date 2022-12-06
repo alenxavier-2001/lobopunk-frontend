@@ -56,8 +56,7 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
                   ? VideoPlayer(_videoPlayerController)
                   : Center(
                       child: AspectRatio(
-                          aspectRatio: _videoPlayerController.value.size.width /
-                              _videoPlayerController.value.size.height,
+                          aspectRatio: _videoPlayerController.value.aspectRatio,
                           child: VideoPlayer(_videoPlayerController)),
                     ),
               GestureDetector(
@@ -70,7 +69,8 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
               Align(
                 alignment: Alignment.bottomRight,
                 child: Padding(
-                  padding: EdgeInsets.all(width / 50),
+                  padding:
+                      EdgeInsets.only(right: width / 50, bottom: width / 30),
                   child: CircleAvatar(
                     radius: width / 20,
                     backgroundColor: Colors.black,

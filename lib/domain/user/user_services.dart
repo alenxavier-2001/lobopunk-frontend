@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:lobopunk/domain/core/failures/main_failure.dart';
+import 'package:lobopunk/domain/posts/post_model/post_model.dart';
+import 'package:lobopunk/domain/posts/posts_page_model/posts_page_model.dart';
 import 'package:lobopunk/domain/user/user_model/user_model.dart';
 
 abstract class UserServices {
@@ -11,5 +13,6 @@ abstract class UserServices {
 
   Future<Either<MainFailure, UserModel>> editSocialLink(
       {required Map<String, dynamic> data});
+  Future<Either<MainFailure, PostsPageModel>> getMyPosts();
   Future<Either<MainFailure, UserModel>> getUseData();
 }

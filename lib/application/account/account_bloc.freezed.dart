@@ -19,6 +19,7 @@ mixin _$AccountEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadUserData,
+    required TResult Function() loadUserPosts,
     required TResult Function(File file) changeProfileImage,
     required TResult Function(Map<String, dynamic> data) editProfile,
     required TResult Function(Map<String, dynamic> data) editSocialLink,
@@ -27,6 +28,7 @@ mixin _$AccountEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadUserData,
+    TResult? Function()? loadUserPosts,
     TResult? Function(File file)? changeProfileImage,
     TResult? Function(Map<String, dynamic> data)? editProfile,
     TResult? Function(Map<String, dynamic> data)? editSocialLink,
@@ -35,6 +37,7 @@ mixin _$AccountEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadUserData,
+    TResult Function()? loadUserPosts,
     TResult Function(File file)? changeProfileImage,
     TResult Function(Map<String, dynamic> data)? editProfile,
     TResult Function(Map<String, dynamic> data)? editSocialLink,
@@ -44,6 +47,7 @@ mixin _$AccountEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadUserData value) loadUserData,
+    required TResult Function(LoadUserPosts value) loadUserPosts,
     required TResult Function(ChangeProfileImage value) changeProfileImage,
     required TResult Function(EditProfile value) editProfile,
     required TResult Function(EditSocialLink value) editSocialLink,
@@ -52,6 +56,7 @@ mixin _$AccountEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadUserData value)? loadUserData,
+    TResult? Function(LoadUserPosts value)? loadUserPosts,
     TResult? Function(ChangeProfileImage value)? changeProfileImage,
     TResult? Function(EditProfile value)? editProfile,
     TResult? Function(EditSocialLink value)? editSocialLink,
@@ -60,6 +65,7 @@ mixin _$AccountEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadUserData value)? loadUserData,
+    TResult Function(LoadUserPosts value)? loadUserPosts,
     TResult Function(ChangeProfileImage value)? changeProfileImage,
     TResult Function(EditProfile value)? editProfile,
     TResult Function(EditSocialLink value)? editSocialLink,
@@ -125,6 +131,7 @@ class _$LoadUserData implements LoadUserData {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadUserData,
+    required TResult Function() loadUserPosts,
     required TResult Function(File file) changeProfileImage,
     required TResult Function(Map<String, dynamic> data) editProfile,
     required TResult Function(Map<String, dynamic> data) editSocialLink,
@@ -136,6 +143,7 @@ class _$LoadUserData implements LoadUserData {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadUserData,
+    TResult? Function()? loadUserPosts,
     TResult? Function(File file)? changeProfileImage,
     TResult? Function(Map<String, dynamic> data)? editProfile,
     TResult? Function(Map<String, dynamic> data)? editSocialLink,
@@ -147,6 +155,7 @@ class _$LoadUserData implements LoadUserData {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadUserData,
+    TResult Function()? loadUserPosts,
     TResult Function(File file)? changeProfileImage,
     TResult Function(Map<String, dynamic> data)? editProfile,
     TResult Function(Map<String, dynamic> data)? editSocialLink,
@@ -162,6 +171,7 @@ class _$LoadUserData implements LoadUserData {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadUserData value) loadUserData,
+    required TResult Function(LoadUserPosts value) loadUserPosts,
     required TResult Function(ChangeProfileImage value) changeProfileImage,
     required TResult Function(EditProfile value) editProfile,
     required TResult Function(EditSocialLink value) editSocialLink,
@@ -173,6 +183,7 @@ class _$LoadUserData implements LoadUserData {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadUserData value)? loadUserData,
+    TResult? Function(LoadUserPosts value)? loadUserPosts,
     TResult? Function(ChangeProfileImage value)? changeProfileImage,
     TResult? Function(EditProfile value)? editProfile,
     TResult? Function(EditSocialLink value)? editSocialLink,
@@ -184,6 +195,7 @@ class _$LoadUserData implements LoadUserData {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadUserData value)? loadUserData,
+    TResult Function(LoadUserPosts value)? loadUserPosts,
     TResult Function(ChangeProfileImage value)? changeProfileImage,
     TResult Function(EditProfile value)? editProfile,
     TResult Function(EditSocialLink value)? editSocialLink,
@@ -198,6 +210,126 @@ class _$LoadUserData implements LoadUserData {
 
 abstract class LoadUserData implements AccountEvent {
   const factory LoadUserData() = _$LoadUserData;
+}
+
+/// @nodoc
+abstract class _$$LoadUserPostsCopyWith<$Res> {
+  factory _$$LoadUserPostsCopyWith(
+          _$LoadUserPosts value, $Res Function(_$LoadUserPosts) then) =
+      __$$LoadUserPostsCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LoadUserPostsCopyWithImpl<$Res>
+    extends _$AccountEventCopyWithImpl<$Res, _$LoadUserPosts>
+    implements _$$LoadUserPostsCopyWith<$Res> {
+  __$$LoadUserPostsCopyWithImpl(
+      _$LoadUserPosts _value, $Res Function(_$LoadUserPosts) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$LoadUserPosts implements LoadUserPosts {
+  const _$LoadUserPosts();
+
+  @override
+  String toString() {
+    return 'AccountEvent.loadUserPosts()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LoadUserPosts);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loadUserData,
+    required TResult Function() loadUserPosts,
+    required TResult Function(File file) changeProfileImage,
+    required TResult Function(Map<String, dynamic> data) editProfile,
+    required TResult Function(Map<String, dynamic> data) editSocialLink,
+  }) {
+    return loadUserPosts();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loadUserData,
+    TResult? Function()? loadUserPosts,
+    TResult? Function(File file)? changeProfileImage,
+    TResult? Function(Map<String, dynamic> data)? editProfile,
+    TResult? Function(Map<String, dynamic> data)? editSocialLink,
+  }) {
+    return loadUserPosts?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loadUserData,
+    TResult Function()? loadUserPosts,
+    TResult Function(File file)? changeProfileImage,
+    TResult Function(Map<String, dynamic> data)? editProfile,
+    TResult Function(Map<String, dynamic> data)? editSocialLink,
+    required TResult orElse(),
+  }) {
+    if (loadUserPosts != null) {
+      return loadUserPosts();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LoadUserData value) loadUserData,
+    required TResult Function(LoadUserPosts value) loadUserPosts,
+    required TResult Function(ChangeProfileImage value) changeProfileImage,
+    required TResult Function(EditProfile value) editProfile,
+    required TResult Function(EditSocialLink value) editSocialLink,
+  }) {
+    return loadUserPosts(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LoadUserData value)? loadUserData,
+    TResult? Function(LoadUserPosts value)? loadUserPosts,
+    TResult? Function(ChangeProfileImage value)? changeProfileImage,
+    TResult? Function(EditProfile value)? editProfile,
+    TResult? Function(EditSocialLink value)? editSocialLink,
+  }) {
+    return loadUserPosts?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoadUserData value)? loadUserData,
+    TResult Function(LoadUserPosts value)? loadUserPosts,
+    TResult Function(ChangeProfileImage value)? changeProfileImage,
+    TResult Function(EditProfile value)? editProfile,
+    TResult Function(EditSocialLink value)? editSocialLink,
+    required TResult orElse(),
+  }) {
+    if (loadUserPosts != null) {
+      return loadUserPosts(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LoadUserPosts implements AccountEvent {
+  const factory LoadUserPosts() = _$LoadUserPosts;
 }
 
 /// @nodoc
@@ -266,6 +398,7 @@ class _$ChangeProfileImage implements ChangeProfileImage {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadUserData,
+    required TResult Function() loadUserPosts,
     required TResult Function(File file) changeProfileImage,
     required TResult Function(Map<String, dynamic> data) editProfile,
     required TResult Function(Map<String, dynamic> data) editSocialLink,
@@ -277,6 +410,7 @@ class _$ChangeProfileImage implements ChangeProfileImage {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadUserData,
+    TResult? Function()? loadUserPosts,
     TResult? Function(File file)? changeProfileImage,
     TResult? Function(Map<String, dynamic> data)? editProfile,
     TResult? Function(Map<String, dynamic> data)? editSocialLink,
@@ -288,6 +422,7 @@ class _$ChangeProfileImage implements ChangeProfileImage {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadUserData,
+    TResult Function()? loadUserPosts,
     TResult Function(File file)? changeProfileImage,
     TResult Function(Map<String, dynamic> data)? editProfile,
     TResult Function(Map<String, dynamic> data)? editSocialLink,
@@ -303,6 +438,7 @@ class _$ChangeProfileImage implements ChangeProfileImage {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadUserData value) loadUserData,
+    required TResult Function(LoadUserPosts value) loadUserPosts,
     required TResult Function(ChangeProfileImage value) changeProfileImage,
     required TResult Function(EditProfile value) editProfile,
     required TResult Function(EditSocialLink value) editSocialLink,
@@ -314,6 +450,7 @@ class _$ChangeProfileImage implements ChangeProfileImage {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadUserData value)? loadUserData,
+    TResult? Function(LoadUserPosts value)? loadUserPosts,
     TResult? Function(ChangeProfileImage value)? changeProfileImage,
     TResult? Function(EditProfile value)? editProfile,
     TResult? Function(EditSocialLink value)? editSocialLink,
@@ -325,6 +462,7 @@ class _$ChangeProfileImage implements ChangeProfileImage {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadUserData value)? loadUserData,
+    TResult Function(LoadUserPosts value)? loadUserPosts,
     TResult Function(ChangeProfileImage value)? changeProfileImage,
     TResult Function(EditProfile value)? editProfile,
     TResult Function(EditSocialLink value)? editSocialLink,
@@ -418,6 +556,7 @@ class _$EditProfile implements EditProfile {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadUserData,
+    required TResult Function() loadUserPosts,
     required TResult Function(File file) changeProfileImage,
     required TResult Function(Map<String, dynamic> data) editProfile,
     required TResult Function(Map<String, dynamic> data) editSocialLink,
@@ -429,6 +568,7 @@ class _$EditProfile implements EditProfile {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadUserData,
+    TResult? Function()? loadUserPosts,
     TResult? Function(File file)? changeProfileImage,
     TResult? Function(Map<String, dynamic> data)? editProfile,
     TResult? Function(Map<String, dynamic> data)? editSocialLink,
@@ -440,6 +580,7 @@ class _$EditProfile implements EditProfile {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadUserData,
+    TResult Function()? loadUserPosts,
     TResult Function(File file)? changeProfileImage,
     TResult Function(Map<String, dynamic> data)? editProfile,
     TResult Function(Map<String, dynamic> data)? editSocialLink,
@@ -455,6 +596,7 @@ class _$EditProfile implements EditProfile {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadUserData value) loadUserData,
+    required TResult Function(LoadUserPosts value) loadUserPosts,
     required TResult Function(ChangeProfileImage value) changeProfileImage,
     required TResult Function(EditProfile value) editProfile,
     required TResult Function(EditSocialLink value) editSocialLink,
@@ -466,6 +608,7 @@ class _$EditProfile implements EditProfile {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadUserData value)? loadUserData,
+    TResult? Function(LoadUserPosts value)? loadUserPosts,
     TResult? Function(ChangeProfileImage value)? changeProfileImage,
     TResult? Function(EditProfile value)? editProfile,
     TResult? Function(EditSocialLink value)? editSocialLink,
@@ -477,6 +620,7 @@ class _$EditProfile implements EditProfile {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadUserData value)? loadUserData,
+    TResult Function(LoadUserPosts value)? loadUserPosts,
     TResult Function(ChangeProfileImage value)? changeProfileImage,
     TResult Function(EditProfile value)? editProfile,
     TResult Function(EditSocialLink value)? editSocialLink,
@@ -570,6 +714,7 @@ class _$EditSocialLink implements EditSocialLink {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadUserData,
+    required TResult Function() loadUserPosts,
     required TResult Function(File file) changeProfileImage,
     required TResult Function(Map<String, dynamic> data) editProfile,
     required TResult Function(Map<String, dynamic> data) editSocialLink,
@@ -581,6 +726,7 @@ class _$EditSocialLink implements EditSocialLink {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadUserData,
+    TResult? Function()? loadUserPosts,
     TResult? Function(File file)? changeProfileImage,
     TResult? Function(Map<String, dynamic> data)? editProfile,
     TResult? Function(Map<String, dynamic> data)? editSocialLink,
@@ -592,6 +738,7 @@ class _$EditSocialLink implements EditSocialLink {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadUserData,
+    TResult Function()? loadUserPosts,
     TResult Function(File file)? changeProfileImage,
     TResult Function(Map<String, dynamic> data)? editProfile,
     TResult Function(Map<String, dynamic> data)? editSocialLink,
@@ -607,6 +754,7 @@ class _$EditSocialLink implements EditSocialLink {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadUserData value) loadUserData,
+    required TResult Function(LoadUserPosts value) loadUserPosts,
     required TResult Function(ChangeProfileImage value) changeProfileImage,
     required TResult Function(EditProfile value) editProfile,
     required TResult Function(EditSocialLink value) editSocialLink,
@@ -618,6 +766,7 @@ class _$EditSocialLink implements EditSocialLink {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadUserData value)? loadUserData,
+    TResult? Function(LoadUserPosts value)? loadUserPosts,
     TResult? Function(ChangeProfileImage value)? changeProfileImage,
     TResult? Function(EditProfile value)? editProfile,
     TResult? Function(EditSocialLink value)? editSocialLink,
@@ -629,6 +778,7 @@ class _$EditSocialLink implements EditSocialLink {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadUserData value)? loadUserData,
+    TResult Function(LoadUserPosts value)? loadUserPosts,
     TResult Function(ChangeProfileImage value)? changeProfileImage,
     TResult Function(EditProfile value)? editProfile,
     TResult Function(EditSocialLink value)? editSocialLink,
@@ -656,6 +806,7 @@ mixin _$AccountState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
   UserModel get userDetails => throw _privateConstructorUsedError;
+  PostsPageModel get userposts => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AccountStateCopyWith<AccountState> get copyWith =>
@@ -668,7 +819,11 @@ abstract class $AccountStateCopyWith<$Res> {
           AccountState value, $Res Function(AccountState) then) =
       _$AccountStateCopyWithImpl<$Res, AccountState>;
   @useResult
-  $Res call({bool isLoading, bool hasError, UserModel userDetails});
+  $Res call(
+      {bool isLoading,
+      bool hasError,
+      UserModel userDetails,
+      PostsPageModel userposts});
 }
 
 /// @nodoc
@@ -687,6 +842,7 @@ class _$AccountStateCopyWithImpl<$Res, $Val extends AccountState>
     Object? isLoading = null,
     Object? hasError = null,
     Object? userDetails = null,
+    Object? userposts = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -701,6 +857,10 @@ class _$AccountStateCopyWithImpl<$Res, $Val extends AccountState>
           ? _value.userDetails
           : userDetails // ignore: cast_nullable_to_non_nullable
               as UserModel,
+      userposts: null == userposts
+          ? _value.userposts
+          : userposts // ignore: cast_nullable_to_non_nullable
+              as PostsPageModel,
     ) as $Val);
   }
 }
@@ -713,7 +873,11 @@ abstract class _$$_AccountStateCopyWith<$Res>
       __$$_AccountStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, bool hasError, UserModel userDetails});
+  $Res call(
+      {bool isLoading,
+      bool hasError,
+      UserModel userDetails,
+      PostsPageModel userposts});
 }
 
 /// @nodoc
@@ -730,6 +894,7 @@ class __$$_AccountStateCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? hasError = null,
     Object? userDetails = null,
+    Object? userposts = null,
   }) {
     return _then(_$_AccountState(
       isLoading: null == isLoading
@@ -744,6 +909,10 @@ class __$$_AccountStateCopyWithImpl<$Res>
           ? _value.userDetails
           : userDetails // ignore: cast_nullable_to_non_nullable
               as UserModel,
+      userposts: null == userposts
+          ? _value.userposts
+          : userposts // ignore: cast_nullable_to_non_nullable
+              as PostsPageModel,
     ));
   }
 }
@@ -754,7 +923,8 @@ class _$_AccountState implements _AccountState {
   const _$_AccountState(
       {required this.isLoading,
       required this.hasError,
-      required this.userDetails});
+      required this.userDetails,
+      required this.userposts});
 
   @override
   final bool isLoading;
@@ -762,10 +932,12 @@ class _$_AccountState implements _AccountState {
   final bool hasError;
   @override
   final UserModel userDetails;
+  @override
+  final PostsPageModel userposts;
 
   @override
   String toString() {
-    return 'AccountState(isLoading: $isLoading, hasError: $hasError, userDetails: $userDetails)';
+    return 'AccountState(isLoading: $isLoading, hasError: $hasError, userDetails: $userDetails, userposts: $userposts)';
   }
 
   @override
@@ -778,12 +950,14 @@ class _$_AccountState implements _AccountState {
             (identical(other.hasError, hasError) ||
                 other.hasError == hasError) &&
             (identical(other.userDetails, userDetails) ||
-                other.userDetails == userDetails));
+                other.userDetails == userDetails) &&
+            (identical(other.userposts, userposts) ||
+                other.userposts == userposts));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, isLoading, hasError, userDetails);
+      Object.hash(runtimeType, isLoading, hasError, userDetails, userposts);
 
   @JsonKey(ignore: true)
   @override
@@ -796,7 +970,8 @@ abstract class _AccountState implements AccountState {
   const factory _AccountState(
       {required final bool isLoading,
       required final bool hasError,
-      required final UserModel userDetails}) = _$_AccountState;
+      required final UserModel userDetails,
+      required final PostsPageModel userposts}) = _$_AccountState;
 
   @override
   bool get isLoading;
@@ -804,6 +979,8 @@ abstract class _AccountState implements AccountState {
   bool get hasError;
   @override
   UserModel get userDetails;
+  @override
+  PostsPageModel get userposts;
   @override
   @JsonKey(ignore: true)
   _$$_AccountStateCopyWith<_$_AccountState> get copyWith =>
