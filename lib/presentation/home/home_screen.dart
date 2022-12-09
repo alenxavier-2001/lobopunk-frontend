@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lobopunk/core/common_notifer.dart';
+import 'package:lobopunk/core/contasts.dart';
+import 'package:lobopunk/infrastructure/common_impl/common_impl.dart';
 import 'package:lobopunk/widgets/custom_loader.dart';
 
 import 'package:lobopunk/widgets/post_widget.dart';
@@ -49,19 +52,67 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
-                width: width / 4.8,
-                height: height / 23,
-                decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(25)),
-                child: Center(
-                  child: Text(
-                    "Medium",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(fontSize: width / 24),
+              InkWell(
+                onTap: () {
+                  showModalBottomSheet(
+                      context: context,
+                      backgroundColor:
+                          Theme.of(context).scaffoldBackgroundColor,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(25.0),
+                        ),
+                      ),
+                      builder: ((context) {
+                        return SizedBox(
+                          height: height / 5,
+                          child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: qualityList.length,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    CommonImplementation()
+                                        .changeQuality(qualityList[index]);
+                                    Navigator.pop(context);
+                                  },
+                                  child: SizedBox(
+                                    height: height / 16,
+                                    child: ListTile(
+                                      title: Center(
+                                        child: Text(
+                                          qualityList[index],
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineMedium!
+                                              .copyWith(fontSize: width / 20),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
+                        );
+                      }));
+                },
+                child: Container(
+                  width: width / 4.8,
+                  height: height / 23,
+                  decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(25)),
+                  child: Center(
+                    child: ValueListenableBuilder(
+                        valueListenable: qualityNotifier,
+                        builder: (context, String quality, _) {
+                          return Text(
+                            quality,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(fontSize: width / 24),
+                          );
+                        }),
                   ),
                 ),
               ),

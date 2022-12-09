@@ -16,4 +16,4 @@ Future<void> configureInjection() async {
 //   preferRelativeImports: true, // default
 //   asExtension: false, // default
 // )
-// void configureDependencies() => getIt.init();
+// void configureInjection() => getIt.init(environment: Environment.prod);

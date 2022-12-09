@@ -11,6 +11,7 @@ import 'package:lobopunk/domain/core/api_end_points.dart';
 import 'package:lobopunk/domain/core/failures/main_failure.dart';
 import 'package:http/http.dart' as http;
 import 'package:lobopunk/domain/core/failures/server_error_model/server_error_model.dart';
+import 'package:lobopunk/domain/user/user_model/user_model.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -90,14 +91,14 @@ class AuthImplementation implements AuthService {
   }
 
   @override
-  Future<Either<MainFailure, bool>> tokenValidation(String token) async {
+  Future<Either<MainFailure, UserModel>> tokenValidation(String token) async {
     try {
       final url = Uri.parse("${ApiEndPoints.auth}tokenIsvalid");
 
       final response = await http.post(url,
           headers: <String, String>{'x-auth-token': token}, body: {});
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final result = jsonDecode(response.body);
+        final result = UserModel.fromJson(jsonDecode(response.body));
 
         return Right(result);
       } else {

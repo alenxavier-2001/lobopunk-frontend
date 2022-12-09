@@ -1,10 +1,16 @@
+import 'dart:developer';
+
 import 'package:expandable_text/expandable_text.dart';
 
 import 'package:flutter/material.dart';
+import 'package:lobopunk/core/usernamenotifer.dart';
+import 'package:lobopunk/domain/posts/post_model/post_model.dart';
+import 'package:lobopunk/infrastructure/userdetails/user_impl.dart';
 import 'package:lobopunk/widgets/mysizedbox70.dart';
 
 class PostBottomWidget extends StatelessWidget {
-  const PostBottomWidget({super.key});
+  const PostBottomWidget({super.key, required this.data});
+  final PostModel data;
 
   @override
   Widget build(BuildContext context) {
@@ -17,18 +23,28 @@ class PostBottomWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(
-            "dcguhbdckcd",
-            style: Theme.of(context)
-                .textTheme
-                .headlineMedium!
-                .copyWith(fontSize: width / 19),
-          ),
+          ValueListenableBuilder(
+              valueListenable: usernamlists,
+              builder: (context, Map<String, dynamic> usernamelists, _) {
+                (usernamelists.containsKey(data.userid))
+                    ? null
+                    : UserImplementation()
+                        .getUserName(userid: data.userid.toString());
+                return Text(
+                  (usernamelists.containsKey(data.userid))
+                      ? usernamelists[data.userid]
+                      : data.userid,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .copyWith(fontSize: width / 19),
+                );
+              }),
           SizedBox(
             height: height / 70,
           ),
           ExpandableText(
-            "video goes here for more  gcy cbdcbcdk  bhdcb dicwbdhidcwbiwcd wci cewi cwi wci wci cwi w wcwehhhhhhhhhhhhhhhhhhhhhhhhhhhhh djbwccc ",
+            "${data.description}",
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium!

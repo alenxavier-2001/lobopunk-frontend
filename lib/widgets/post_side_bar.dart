@@ -1,6 +1,10 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:lobopunk/core/contasts.dart';
+import 'package:lobopunk/core/post_notifier.dart';
+import 'package:lobopunk/domain/posts/post_model/post_model.dart';
+import 'package:lobopunk/infrastructure/post/post_impl.dart';
 import 'package:lobopunk/widgets/like_animation.dart';
 import 'package:lobopunk/widgets/mysizedbox.dart';
 import 'package:lobopunk/widgets/mysizedbox70.dart';
@@ -10,9 +14,11 @@ String imgurl1 =
 
 class PostSideBar extends StatelessWidget {
   final Widget likeButtonWidget;
+  final int index;
   const PostSideBar({
     super.key,
     required this.likeButtonWidget,
+    required this.index,
   });
 
   @override
@@ -22,46 +28,69 @@ class PostSideBar extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.monetization_on_outlined,
-                size: width / 11,
-                color: Colors.white,
-              ),
-            ),
-            const MySizedBox70(),
-            likeButtonWidget,
-            const MySizedBox70(),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.heart_broken_outlined,
-                size: width / 11,
-                color: Colors.white,
-              ),
-            ),
-            const MySizedBox70(),
-            InkWell(
-              onTap: () {},
-              child: Transform.rotate(
-                angle: 180 * math.pi / 100,
-                child: Icon(
-                  Icons.send_outlined,
-                  size: width / 12,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            const MySizedBox(),
-            const MySizedBox(),
-            const MySizedBox(),
-          ],
-        ),
+        ValueListenableBuilder(
+            valueListenable: postListNotifier,
+            builder: (context, List<PostModel> postlist, _) {
+              PostModel postdata = postlist[index];
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.more_vert_outlined,
+                        size: width / 11,
+                        color: Colors.white,
+                      )),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.monetization_on_outlined,
+                      size: width / 11,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const MySizedBox70(),
+                  likeButtonWidget,
+                  const MySizedBox70(),
+                  IconButton(
+                    onPressed: () {
+                      if ((postdata.dislike!.contains(constusermodel.id))) {
+                      } else {
+                        PostImplementation()
+                            .dislikePost(postdata.id.toString(), index);
+                      }
+                    },
+                    icon: Icon(
+                      (postdata.dislike!.contains(constusermodel.id))
+                          ? Icons.heart_broken_rounded
+                          : Icons.heart_broken_outlined,
+                      size: width / 11,
+                      color: (postdata.dislike!.contains(constusermodel.id))
+                          ? Colors.redAccent
+                          : Colors.white,
+                    ),
+                  ),
+                  const MySizedBox70(),
+                  InkWell(
+                    onTap: () {},
+                    child: Transform.rotate(
+                      angle: 180 * math.pi / 100,
+                      child: Icon(
+                        Icons.send_outlined,
+                        size: width / 12,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const MySizedBox(),
+                  const MySizedBox(),
+                  const MySizedBox(),
+                ],
+              );
+            }),
       ],
     );
   }

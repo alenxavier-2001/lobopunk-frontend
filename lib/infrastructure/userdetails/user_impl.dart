@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
+import 'package:lobopunk/core/usernamenotifer.dart';
 import 'package:lobopunk/domain/core/api_end_points.dart';
 import 'package:lobopunk/domain/core/failures/server_error_model/server_error_model.dart';
 import 'package:lobopunk/domain/posts/posts_page_model/posts_page_model.dart';
@@ -169,6 +170,41 @@ class UserImplementation extends UserServices {
         final result = PostsPageModel(page: 0, results: []);
 
         return Right(result);
+      } else {
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
+      }
+    } catch (e) {
+      log(e.toString());
+      return Left(MainFailure.clientFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<MainFailure, Map<String, dynamic>>> getUserName(
+      {required String userid}) async {
+    log(userid);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String token = prefs.getString('token') ?? "";
+      final url = Uri.parse("${ApiEndPoints.getusername}$userid");
+      log(url.toString());
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'x-auth-token': token,
+          // 'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final Map<String, dynamic> result = jsonDecode(response.body);
+        Map<String, dynamic> dat = {userid: result['userid']};
+        // usernamlists.value.addAll({userid: result['userid']});
+        // usernamlists.value[userid] = result['userid'];
+        //usernamlists.notifyListeners();
+        usernamlists.value = Map.from(usernamlists.value)..addAll(dat);
+        return Right(dat);
       } else {
         return Left(MainFailure.serverFailure(
             ServerErrorModel.fromJson(jsonDecode(response.body))));

@@ -21,6 +21,7 @@ import 'package:lobopunk/infrastructure/userdetails/user_impl.dart' as _i10;
 
 /// ignore_for_file: unnecessary_lambdas
 /// ignore_for_file: lines_longer_than_80_chars
+/// initializes the registration of main-scope dependencies inside of [GetIt]
 _i1.GetIt $initGetIt(
   _i1.GetIt get, {
   String? environment,

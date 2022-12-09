@@ -39,10 +39,11 @@ class AccountScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       BlocProvider.of<AccountBloc>(context).add(const LoadUserData());
+      Future.delayed(const Duration(seconds: 1), () {
+        BlocProvider.of<AccountBloc>(context).add(const LoadUserPosts());
+      });
     });
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      BlocProvider.of<AccountBloc>(context).add(const LoadUserPosts());
-    });
+
     return Scaffold(
       // appBar: AppBar(
       //   backgroundColor: Colors.transparent,

@@ -1,11 +1,13 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:lobopunk/domain/core/failures/main_failure.dart';
+import 'package:lobopunk/domain/posts/post_model/post_model.dart';
 import 'package:lobopunk/domain/posts/posts_page_model/posts_page_model.dart';
 import 'package:lobopunk/domain/user/user_model/user_model.dart';
 import 'package:lobopunk/domain/user/user_services.dart';
@@ -13,6 +15,8 @@ import 'package:lobopunk/domain/user/user_services.dart';
 part 'account_event.dart';
 part 'account_state.dart';
 part 'account_bloc.freezed.dart';
+
+ValueNotifier<List<PostModel>> accountPostListNotifier = ValueNotifier([]);
 
 @injectable
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
@@ -44,6 +48,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
             userDetails: resp,
             userposts: PostsPageModel());
       });
+      // const LoadUserPosts();
 
       emit(newState);
     });
@@ -52,8 +57,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     on<LoadUserPosts>((event, emit) async {
       //send loading to UI
       emit(AccountState(
-          isLoading: true,
-          hasError: false,
+          isLoading: state.isLoading,
+          hasError: state.hasError,
           userDetails: state.userDetails,
           userposts: PostsPageModel()));
 
@@ -69,9 +74,10 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
             userDetails: state.userDetails,
             userposts: PostsPageModel());
       }, (PostsPageModel resp) {
+        accountPostListNotifier.value = resp.results!;
         return AccountState(
-            isLoading: false,
-            hasError: false,
+            isLoading: state.isLoading,
+            hasError: state.isLoading,
             userDetails: state.userDetails,
             userposts: resp);
       });

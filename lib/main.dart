@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lobopunk/application/account/account_bloc.dart';
+import 'package:lobopunk/core/common_notifer.dart';
+import 'package:lobopunk/core/contasts.dart';
 import 'package:lobopunk/core/router.dart';
 
 import 'package:lobopunk/domain/core/di/injectable.dart';
+import 'package:lobopunk/domain/user/user_model/user_model.dart';
 import 'package:lobopunk/infrastructure/auth/auth_impl.dart';
 import 'package:lobopunk/presentation/account/account_screen.dart';
 import 'package:lobopunk/presentation/addpost/addpost.dart';
@@ -85,14 +88,17 @@ class _SplashScreenState extends State<SplashScreen> {
   getUserAndNav() async {
     final prefs = await SharedPreferences.getInstance();
     final String token = prefs.getString('token') ?? "";
+    final String quality = prefs.getString('quality') ?? "Medium";
+    qualityNotifier.value = quality;
 
     if (token.isNotEmpty || token != "") {
       final res = await AuthImplementation().tokenValidation(token);
 
       res.fold((l) {
         Navigator.pushReplacementNamed(context, SignInScreen.routeName);
-      }, (bool val) {
-        if (val) {
+      }, (UserModel val) {
+        if (val.id != "") {
+          constusermodel = val;
           Timer(const Duration(milliseconds: 500), () {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => MainPageScreen()));

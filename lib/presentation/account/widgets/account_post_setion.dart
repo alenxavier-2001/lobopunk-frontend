@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lobopunk/application/account/account_bloc.dart';
+import 'package:lobopunk/core/common_notifer.dart';
 import 'package:lobopunk/core/contasts.dart';
+import 'package:lobopunk/core/post_notifier.dart';
 import 'package:lobopunk/core/snapnotifier.dart';
 import 'package:lobopunk/domain/posts/post_model/post_model.dart';
 import 'package:lobopunk/widgets/custom_loader.dart';
@@ -69,6 +71,7 @@ class AccountPostSection extends StatelessWidget {
                     padding: EdgeInsets.all(width / 90),
                     child: InkWell(
                       onTap: () {
+                        postListNotifier.value = userposts;
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -122,9 +125,13 @@ class AccountPostPageView extends StatelessWidget {
               itemCount: userposts.length,
               itemBuilder: (context, index) {
                 return PostWidget(
-                  index: index,
-                  data: userposts[index],
-                );
+                    index: index,
+                    data: userposts[index],
+                    url: (qualityNotifier.value == "High")
+                        ? "${userposts[index].highvideourl}"
+                        : (qualityNotifier.value == "Medium")
+                            ? "${userposts[index].midvideourl}"
+                            : "${userposts[index].lowvideourl}");
               });
         }
       }),
