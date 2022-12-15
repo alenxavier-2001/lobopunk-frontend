@@ -7,7 +7,7 @@ class MainPageScreen extends StatelessWidget {
   static const String routeName = '/mainpage-screen';
   MainPageScreen({super.key});
   final _pages = [
-    HomeScreen(),
+    const HomeScreen(),
     Container(
       child: Center(child: Text("Public")),
     ),
@@ -17,7 +17,7 @@ class MainPageScreen extends StatelessWidget {
     Container(
       child: Center(child: Text("Notification")),
     ),
-    AccountScreen(),
+    const AccountScreen(),
   ];
 
   @override

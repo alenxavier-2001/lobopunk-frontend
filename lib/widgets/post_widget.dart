@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lobopunk/application/comment/comment_bloc.dart';
 import 'package:lobopunk/core/contasts.dart';
 import 'package:lobopunk/core/post_notifier.dart';
 import 'package:lobopunk/domain/posts/post_model/post_model.dart';
@@ -82,11 +84,13 @@ class _PostWidgetState extends State<PostWidget> {
                                     isAnimating: true,
                                     child: IconButton(
                                         onPressed: () {
-                                          if ((postdata.like!.contains(constusermodel.id))) {
-                            } else {
-                              PostImplementation().likePost(
-                                  widget.data.id.toString(), widget.index);
-                            }
+                                          if ((postdata.like!
+                                              .contains(constusermodel.id))) {
+                                          } else {
+                                            PostImplementation().likePost(
+                                                widget.data.id.toString(),
+                                                widget.index);
+                                          }
                                         },
                                         icon: Icon(
                                           (postdata.like!

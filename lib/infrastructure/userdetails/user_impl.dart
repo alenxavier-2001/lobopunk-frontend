@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:lobopunk/core/usernamenotifer.dart';
 import 'package:lobopunk/domain/core/api_end_points.dart';
 import 'package:lobopunk/domain/core/failures/server_error_model/server_error_model.dart';
+import 'package:lobopunk/domain/posts/post_model/post_model.dart';
 import 'package:lobopunk/domain/posts/posts_page_model/posts_page_model.dart';
 import 'package:lobopunk/domain/user/user_model/user_model.dart';
 import 'package:lobopunk/domain/core/failures/main_failure.dart';
@@ -183,12 +184,11 @@ class UserImplementation extends UserServices {
   @override
   Future<Either<MainFailure, Map<String, dynamic>>> getUserName(
       {required String userid}) async {
-    log(userid);
     try {
       final prefs = await SharedPreferences.getInstance();
       final String token = prefs.getString('token') ?? "";
       final url = Uri.parse("${ApiEndPoints.getusername}$userid");
-      log(url.toString());
+
       final response = await http.get(
         url,
         headers: <String, String>{
@@ -200,11 +200,40 @@ class UserImplementation extends UserServices {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final Map<String, dynamic> result = jsonDecode(response.body);
         Map<String, dynamic> dat = {userid: result['userid']};
+        Map<String, dynamic> image = {userid: result['profileimage']};
         // usernamlists.value.addAll({userid: result['userid']});
         // usernamlists.value[userid] = result['userid'];
         //usernamlists.notifyListeners();
         usernamlists.value = Map.from(usernamlists.value)..addAll(dat);
+        userimagelists.value = Map.from(userimagelists.value)..addAll(image);
         return Right(dat);
+      } else {
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
+      }
+    } catch (e) {
+      log(e.toString());
+      return Left(MainFailure.clientFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<MainFailure, PostModel>> editPost(
+      Map<String, dynamic> data) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String token = prefs.getString('token') ?? "";
+      final url = Uri.parse(ApiEndPoints.edituserposts);
+      var body = data;
+      final response = await http.post(url,
+          headers: <String, String>{
+            'x-auth-token': token,
+            // 'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final result = PostModel.fromJson(jsonDecode(response.body));
+        return Right(result);
       } else {
         return Left(MainFailure.serverFailure(
             ServerErrorModel.fromJson(jsonDecode(response.body))));

@@ -5,6 +5,8 @@ import 'package:lobopunk/core/contasts.dart';
 import 'package:lobopunk/core/post_notifier.dart';
 import 'package:lobopunk/domain/posts/post_model/post_model.dart';
 import 'package:lobopunk/infrastructure/post/post_impl.dart';
+import 'package:lobopunk/presentation/account/widgets/post_edit_section.dart';
+import 'package:lobopunk/presentation/account/widgets/post_prev_edit.dart';
 import 'package:lobopunk/widgets/like_animation.dart';
 import 'package:lobopunk/widgets/mysizedbox.dart';
 import 'package:lobopunk/widgets/mysizedbox70.dart';
@@ -37,7 +39,62 @@ class PostSideBar extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            backgroundColor:
+                                Theme.of(context).scaffoldBackgroundColor,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(25.0),
+                              ),
+                            ),
+                            builder: ((context) {
+                              return SizedBox(
+                                height: height / 5,
+                                child: Column(
+                                  children: [
+                                    const MySizedBox70(),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        MoreOptionIconWidget(
+                                          icon: Icons.share,
+                                          text: "Share",
+                                          postdata: postdata,
+                                        ),
+                                        MoreOptionIconWidget(
+                                          icon: Icons.download,
+                                          text: "Download",
+                                          postdata: postdata,
+                                        ),
+                                        MoreOptionIconWidget(
+                                          icon: Icons.edit,
+                                          text: "Edit",
+                                          postdata: postdata,
+                                        ),
+                                      ],
+                                    ),
+                                    const MySizedBox70(),
+                                    InkWell(
+                                      onTap: () {},
+                                      child: Text(
+                                        "Delete",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                fontSize: width / 20,
+                                                color: Colors.red,
+                                                fontWeight: FontWeight.w700),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }));
+                      },
                       icon: Icon(
                         Icons.more_vert_outlined,
                         size: width / 11,
@@ -94,34 +151,122 @@ class PostSideBar extends StatelessWidget {
       ],
     );
   }
+}
 
-  _profileImageButton() {
-    return Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.bottomCenter,
-      children: [
-        Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.white),
-              borderRadius: BorderRadius.circular(25),
-              image: DecorationImage(
-                  image: NetworkImage(imgurl1), fit: BoxFit.cover)),
-        ),
-        Positioned(
-            bottom: -10,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(25),
+class MoreOptionIconWidget extends StatelessWidget {
+  const MoreOptionIconWidget({
+    Key? key,
+    required this.text,
+    required this.icon,
+    required this.postdata,
+  }) : super(key: key);
+
+  final String text;
+  final IconData icon;
+  final PostModel postdata;
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    return InkWell(
+      onTap: () {
+        if (text == "Edit") {
+          Navigator.pop(context);
+          showModalBottomSheet(
+              context: context,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(25.0),
+                ),
               ),
-              child: Icon(
-                Icons.add,
-                size: 20,
-              ),
-            ))
-      ],
+              builder: ((context) {
+                return SizedBox(
+                  height: height / 8,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                          showModalBottomSheet(
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(25.0),
+                                ),
+                              ),
+                              builder: ((context) {
+                                return PostDesEditingSection(
+                                  postdata: postdata,
+                                );
+                              }));
+                        },
+                        child: Text(
+                          "Edit description",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  fontSize: width / 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PostPrevEdit(
+                                        postdata: postdata,
+                                      )));
+                        },
+                        child: Text(
+                          "Add previous post",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  fontSize: width / 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }));
+        }
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            width: width / 6.5,
+            height: height / 13,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: Colors.white, width: width / 90)),
+            child: Icon(
+              icon,
+              size: width / 15,
+              color: Colors.white,
+            ),
+          ),
+          const MySizedBox70(),
+          Text(
+            text,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: width / 20,
+                ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lobopunk/application/account/account_bloc.dart';
+import 'package:lobopunk/application/comment/comment_bloc.dart';
 import 'package:lobopunk/core/color.dart';
 import 'package:lobopunk/core/contasts.dart';
 import 'package:lobopunk/core/k_m_b_converter.dart';

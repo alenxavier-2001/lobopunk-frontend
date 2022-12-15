@@ -30,6 +30,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

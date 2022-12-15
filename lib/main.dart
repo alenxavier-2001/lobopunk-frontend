@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lobopunk/application/account/account_bloc.dart';
+import 'package:lobopunk/application/comment/comment_bloc.dart';
 import 'package:lobopunk/core/common_notifer.dart';
 import 'package:lobopunk/core/contasts.dart';
 import 'package:lobopunk/core/router.dart';
@@ -15,6 +16,7 @@ import 'package:lobopunk/presentation/addpost/addpost.dart';
 import 'package:lobopunk/presentation/auth/signin/signin.dart';
 import 'package:lobopunk/presentation/home/home_screen.dart';
 import 'package:lobopunk/presentation/main_page/main_page_screen.dart';
+import 'package:lobopunk/widgets/comment_page.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,6 +35,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (ctx) => getIt<AccountBloc>()),
+        BlocProvider(create: (ctx) => getIt<CommentBloc>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -64,7 +67,7 @@ class MyApp extends StatelessWidget {
         ),
         onGenerateRoute: (settings) => generateRoute(settings),
         home: const SplashScreen(),
-        // home: MainPageScreen(),
+        // home: CommentPageScreen(),
       ),
     );
   }

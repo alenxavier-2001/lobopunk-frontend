@@ -13,6 +13,7 @@ abstract class UserServices {
 
   Future<Either<MainFailure, UserModel>> editSocialLink(
       {required Map<String, dynamic> data});
+  Future<Either<MainFailure, PostModel>> editPost(Map<String, dynamic> data);
   Future<Either<MainFailure, PostsPageModel>> getMyPosts();
   Future<Either<MainFailure, Map<String, dynamic>>> getUserName(
       {required String userid});

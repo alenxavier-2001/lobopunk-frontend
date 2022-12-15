@@ -6,6 +6,7 @@ import 'package:lobopunk/core/contasts.dart';
 import 'package:lobopunk/core/post_notifier.dart';
 import 'package:lobopunk/core/snapnotifier.dart';
 import 'package:lobopunk/domain/posts/post_model/post_model.dart';
+import 'package:lobopunk/presentation/account/widgets/account_post_girdview.dart';
 import 'package:lobopunk/widgets/custom_loader.dart';
 import 'package:lobopunk/widgets/mysizedbox70.dart';
 import 'package:lobopunk/widgets/post_widget.dart';
@@ -50,50 +51,7 @@ class AccountPostSection extends StatelessWidget {
           color: Colors.grey,
         ),
         const MySizedBox70(),
-        BlocBuilder<AccountBloc, AccountState>(builder: (context, state) {
-          if (state.isLoading) {
-            return const CustomLoader();
-          } else if (state.hasError) {
-            return const Center(
-              child: Text("Error Occur"),
-            );
-          } else {
-            List<PostModel> userposts = state.userposts.results ?? [];
-
-            return GridView.builder(
-                itemCount: userposts.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.all(width / 90),
-                    child: InkWell(
-                      onTap: () {
-                        postListNotifier.value = userposts;
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AccountPostPageView(
-                                      pagenumber: index,
-                                    )));
-                      },
-                      child: Container(
-                        width: width / 2.5,
-                        height: height / 4,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    "$kBaseurl${userposts[index].thumbnailurl}"),
-                                fit: BoxFit.cover)),
-                      ),
-                    ),
-                  );
-                });
-          }
-        }),
+        const AccountPostGirdView(),
         //const MySizedBox(),
       ],
     );
