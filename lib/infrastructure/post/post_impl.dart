@@ -186,7 +186,7 @@ class PostImplementation implements PostService {
     log(link.path.toString());
     log(postid.toString());
     log(shortDynamicLink.shortUrl.toString());
-    log(initialLink!.link.toString());
+
     return link.toString();
   }
 
