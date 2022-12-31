@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/src/foundation/change_notifier.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
+import 'package:lobopunk/core/contasts.dart';
 import 'package:lobopunk/core/usernamenotifer.dart';
 import 'package:lobopunk/domain/core/api_end_points.dart';
 import 'package:lobopunk/domain/core/failures/server_error_model/server_error_model.dart';
@@ -235,6 +237,43 @@ class UserImplementation extends UserServices {
         final result = PostModel.fromJson(jsonDecode(response.body));
         return Right(result);
       } else {
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
+      }
+    } catch (e) {
+      log(e.toString());
+      return Left(MainFailure.clientFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<MainFailure, UserModel>> punkUser(String userid) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String token = prefs.getString('token') ?? "";
+      final url = Uri.parse(ApiEndPoints.punkUsers);
+      Map<String, dynamic> body = {"channelid": userid};
+      UserModel user = constusermodel.value;
+      List punklist = user.punking ?? [];
+      punklist = List.from(punklist)..addAll([userid]);
+      user.punking = punklist;
+
+      constusermodel.value = UserModel();
+      constusermodel.value = user;
+
+      final response = await http.post(url,
+          headers: <String, String>{
+            'x-auth-token': token,
+            // 'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final result = UserModel.fromJson(jsonDecode(response.body));
+        constusermodel.value = result;
+
+        return Right(result);
+      } else {
+        constusermodel.value.punking!.remove(userid);
         return Left(MainFailure.serverFailure(
             ServerErrorModel.fromJson(jsonDecode(response.body))));
       }

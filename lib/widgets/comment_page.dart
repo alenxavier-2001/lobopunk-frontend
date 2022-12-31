@@ -72,37 +72,39 @@ class _CommentPageScreenState extends State<CommentPageScreen> {
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onLongPress: (() {
-                    showDialog<void>(
-                      context: context,
-                      barrierDismissible: false, // user must tap button!
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Do you want delete comment'),
-                          actions: <Widget>[
-                            TextButton(
-                              child: const Text(
-                                'Delete',
-                                style: TextStyle(color: Colors.red),
+                    if (constusermodel.value.id == commentlist[index].userid) {
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Do you want delete comment'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text(
+                                  'Delete',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                                onPressed: () {
+                                  BlocProvider.of<CommentBloc>(context).add(
+                                      DeleteComment(
+                                          commentid:
+                                              commentlist[index].id.toString(),
+                                          index: index));
+                                  Navigator.of(context).pop();
+                                },
                               ),
-                              onPressed: () {
-                                BlocProvider.of<CommentBloc>(context).add(
-                                    DeleteComment(
-                                        commentid:
-                                            commentlist[index].id.toString(),
-                                        index: index));
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            TextButton(
-                              child: const Text('Cancel'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                              TextButton(
+                                child: const Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   }),
                   child: Column(
                     children: [
@@ -201,13 +203,13 @@ class _CommentPageScreenState extends State<CommentPageScreen> {
                                 child: Icon(
                                   (commentlist[index]
                                           .like!
-                                          .contains(constusermodel.id))
+                                          .contains(constusermodel.value.id))
                                       ? Icons.favorite_rounded
                                       : Icons.favorite_border_outlined,
                                   size: width / 20,
                                   color: (commentlist[index]
                                           .like!
-                                          .contains(constusermodel.id))
+                                          .contains(constusermodel.value.id))
                                       ? Colors.red
                                       : Colors.white,
                                 ),
@@ -233,13 +235,13 @@ class _CommentPageScreenState extends State<CommentPageScreen> {
                                   child: Icon(
                                     (commentlist[index]
                                             .dislike!
-                                            .contains(constusermodel.id))
+                                            .contains(constusermodel.value.id))
                                         ? Icons.favorite_rounded
                                         : Icons.favorite_border_outlined,
                                     size: width / 20,
                                     color: (commentlist[index]
                                             .dislike!
-                                            .contains(constusermodel.id))
+                                            .contains(constusermodel.value.id))
                                         ? Colors.red
                                         : Colors.white,
                                   ),
@@ -293,44 +295,50 @@ class _CommentPageScreenState extends State<CommentPageScreen> {
                                   ),
                                   child: GestureDetector(
                                     onLongPress: () {
-                                      showDialog<void>(
-                                        context: context,
-                                        barrierDismissible:
-                                            false, // user must tap button!
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: const Text(
-                                                'Do you want delete comment'),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                child: const Text(
-                                                  'Delete',
-                                                  style: TextStyle(
-                                                      color: Colors.red),
+                                      if (constusermodel.value.id ==
+                                          subcomment.userid) {
+                                        showDialog<void>(
+                                          context: context,
+                                          barrierDismissible:
+                                              false, // user must tap button!
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: const Text(
+                                                  'Do you want delete comment'),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  child: const Text(
+                                                    'Delete',
+                                                    style: TextStyle(
+                                                        color: Colors.red),
+                                                  ),
+                                                  onPressed: () {
+                                                    BlocProvider.of<
+                                                                CommentBloc>(
+                                                            context)
+                                                        .add(DeleteSubComment(
+                                                            commentid:
+                                                                commentlist[
+                                                                        index]
+                                                                    .id
+                                                                    .toString(),
+                                                            index: index,
+                                                            subindex:
+                                                                subindex));
+                                                    Navigator.of(context).pop();
+                                                  },
                                                 ),
-                                                onPressed: () {
-                                                  BlocProvider.of<CommentBloc>(
-                                                          context)
-                                                      .add(DeleteSubComment(
-                                                          commentid:
-                                                              commentlist[index]
-                                                                  .id
-                                                                  .toString(),
-                                                          index: index,
-                                                          subindex: subindex));
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                              TextButton(
-                                                child: const Text('Cancel'),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
+                                                TextButton(
+                                                  child: const Text('Cancel'),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }
                                     },
                                     child: Row(
                                       mainAxisAlignment:
@@ -428,7 +436,7 @@ class _CommentPageScreenState extends State<CommentPageScreen> {
                                             InkWell(
                                               onTap: () {
                                                 if (subcomment.like!.contains(
-                                                    constusermodel.id)) {
+                                                    constusermodel.value.id)) {
                                                 } else {
                                                   BlocProvider.of<CommentBloc>(
                                                           context)
@@ -443,14 +451,15 @@ class _CommentPageScreenState extends State<CommentPageScreen> {
                                               },
                                               child: Icon(
                                                 (subcomment.like!.contains(
-                                                        constusermodel.id))
+                                                        constusermodel
+                                                            .value.id))
                                                     ? Icons.favorite_rounded
                                                     : Icons
                                                         .favorite_border_outlined,
                                                 size: width / 20,
                                                 color: (subcomment.like!
-                                                        .contains(
-                                                            constusermodel.id))
+                                                        .contains(constusermodel
+                                                            .value.id))
                                                     ? Colors.red
                                                     : Colors.white,
                                               ),
@@ -469,8 +478,8 @@ class _CommentPageScreenState extends State<CommentPageScreen> {
                                               child: InkWell(
                                                 onTap: () {
                                                   if (subcomment.dislike!
-                                                      .contains(
-                                                          constusermodel.id)) {
+                                                      .contains(constusermodel
+                                                          .value.id)) {
                                                   } else {
                                                     BlocProvider.of<
                                                                 CommentBloc>(
@@ -488,7 +497,8 @@ class _CommentPageScreenState extends State<CommentPageScreen> {
                                                 },
                                                 child: Icon(
                                                   (subcomment.dislike!.contains(
-                                                          constusermodel.id))
+                                                          constusermodel
+                                                              .value.id))
                                                       ? Icons.favorite_rounded
                                                       : Icons
                                                           .favorite_border_outlined,
@@ -496,7 +506,7 @@ class _CommentPageScreenState extends State<CommentPageScreen> {
                                                   color: (subcomment.dislike!
                                                           .contains(
                                                               constusermodel
-                                                                  .id))
+                                                                  .value.id))
                                                       ? Colors.red
                                                       : Colors.white,
                                                 ),

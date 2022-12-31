@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "243968162739",
+    "project_id": "lobopunk-2d9c4",
+    "storage_bucket": "lobopunk-2d9c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243968162739:android:be59d061e010039012e9c6",
+        "android_client_info": {
+          "package_name": "com.appero.lobopunk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "243968162739-ti5tf2em6uugsa2f3gta3rkmjfmvciuj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb1mPtbzRxkhj234CBP-QQUQzHqAQAXT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "243968162739-ti5tf2em6uugsa2f3gta3rkmjfmvciuj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

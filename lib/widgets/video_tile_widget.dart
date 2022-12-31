@@ -50,50 +50,58 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
       future: _initializeVideoplayer,
       builder: ((context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return Stack(
-            children: [
-              (_videoPlayerController.value.size.height > height / 1.1)
-                  ? VideoPlayer(_videoPlayerController)
-                  : Center(
-                      child: AspectRatio(
-                          aspectRatio: _videoPlayerController.value.aspectRatio,
-                          child: VideoPlayer(_videoPlayerController)),
+          return InkWell(
+            onFocusChange: (val) {
+              if (val) {
+                _videoPlayerController.pause();
+              }
+            },
+            child: Stack(
+              children: [
+                (_videoPlayerController.value.size.height > height / 1.1)
+                    ? VideoPlayer(_videoPlayerController)
+                    : Center(
+                        child: AspectRatio(
+                            aspectRatio:
+                                _videoPlayerController.value.aspectRatio,
+                            child: VideoPlayer(_videoPlayerController)),
+                      ),
+                GestureDetector(
+                  onTap: () {
+                    _videoPlayerController.value.isPlaying
+                        ? _videoPlayerController.pause()
+                        : _videoPlayerController.play();
+                  },
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding:
+                        EdgeInsets.only(right: width / 50, bottom: width / 30),
+                    child: CircleAvatar(
+                      radius: width / 20,
+                      backgroundColor: Colors.black,
+                      child: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              (_videoPlayerController.value.volume == 0)
+                                  ? _videoPlayerController.setVolume(1)
+                                  : _videoPlayerController.setVolume(0);
+                            });
+                          },
+                          icon: Center(
+                            child: Icon(
+                              (_videoPlayerController.value.volume == 0)
+                                  ? Icons.music_off
+                                  : Icons.music_note_sharp,
+                              color: Colors.white,
+                            ),
+                          )),
                     ),
-              GestureDetector(
-                onTap: () {
-                  _videoPlayerController.value.isPlaying
-                      ? _videoPlayerController.pause()
-                      : _videoPlayerController.play();
-                },
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding:
-                      EdgeInsets.only(right: width / 50, bottom: width / 30),
-                  child: CircleAvatar(
-                    radius: width / 20,
-                    backgroundColor: Colors.black,
-                    child: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            (_videoPlayerController.value.volume == 0)
-                                ? _videoPlayerController.setVolume(1)
-                                : _videoPlayerController.setVolume(0);
-                          });
-                        },
-                        icon: Center(
-                          child: Icon(
-                            (_videoPlayerController.value.volume == 0)
-                                ? Icons.music_off
-                                : Icons.music_note_sharp,
-                            color: Colors.white,
-                          ),
-                        )),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         } else {
           return Container(

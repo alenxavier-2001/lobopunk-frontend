@@ -55,7 +55,6 @@ class Commentimplementation implements CommentServices {
       final String token = prefs.getString('token') ?? "";
       final url = Uri.parse(ApiEndPoints.commentpost);
 
-      final body = jsonEncode(data);
       final response = await http.post(url,
           headers: <String, String>{
             // 'Content-Type': 'application/json; charset=UTF-8',

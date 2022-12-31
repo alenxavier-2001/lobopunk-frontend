@@ -18,8 +18,8 @@ class CurvedElevatedButton extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return ElevatedButton(
         style: ButtonStyle(
-            padding:
-                MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(15)),
+            padding: MaterialStateProperty.all<EdgeInsets>(
+                EdgeInsets.all(width / 80)),
             backgroundColor: MaterialStateProperty.all<Color>(background),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(

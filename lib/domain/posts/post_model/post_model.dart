@@ -4,6 +4,9 @@ part 'post_model.g.dart';
 
 @JsonSerializable()
 class PostModel {
+  String? posttype;
+  @JsonKey(name: '_id')
+  String? id;
   String? userid;
   String? highvideourl;
   String? midvideourl;
@@ -13,18 +16,20 @@ class PostModel {
   List<String>? hashtags;
   String? posttime;
   bool? public;
+  String? pastpost;
+  String? nextpost;
   List<dynamic>? repost;
   List<dynamic>? mentions;
-  List<dynamic>? like;
+  List<String>? like;
   List<dynamic>? dislike;
-  List<dynamic>? comments;
-  @JsonKey(name: '_id')
-  String? id;
+  List<String>? comments;
   List<dynamic>? report;
   @JsonKey(name: '__v')
   int? v;
 
   PostModel({
+    this.posttype,
+    this.id,
     this.userid,
     this.highvideourl,
     this.midvideourl,
@@ -34,12 +39,13 @@ class PostModel {
     this.hashtags,
     this.posttime,
     this.public,
+    this.pastpost,
+    this.nextpost,
     this.repost,
     this.mentions,
     this.like,
     this.dislike,
     this.comments,
-    this.id,
     this.report,
     this.v,
   });

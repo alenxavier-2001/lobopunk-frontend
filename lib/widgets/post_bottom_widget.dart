@@ -41,7 +41,7 @@ class PostBottomWidget extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .headlineMedium!
-                      .copyWith(fontSize: width / 19),
+                      .copyWith(fontSize: width / 20),
                 );
               }),
           SizedBox(

@@ -1,9 +1,15 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lobopunk/application/account/account_bloc.dart';
 import 'package:lobopunk/application/comment/comment_bloc.dart';
+import 'package:lobopunk/application/hashtag_screen/hashtagscreen_bloc.dart';
+import 'package:lobopunk/application/home/home_bloc.dart';
+import 'package:lobopunk/application/publicpage/publicpage_bloc.dart';
 import 'package:lobopunk/core/common_notifer.dart';
 import 'package:lobopunk/core/contasts.dart';
 import 'package:lobopunk/core/router.dart';
@@ -15,6 +21,7 @@ import 'package:lobopunk/presentation/account/account_screen.dart';
 import 'package:lobopunk/presentation/addpost/addpost.dart';
 import 'package:lobopunk/presentation/auth/signin/signin.dart';
 import 'package:lobopunk/presentation/home/home_screen.dart';
+import 'package:lobopunk/presentation/main_page/bottom_nav.dart';
 import 'package:lobopunk/presentation/main_page/main_page_screen.dart';
 import 'package:lobopunk/widgets/comment_page.dart';
 
@@ -22,20 +29,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await configureInjection();
-  runApp(const MyApp());
+
+  runApp(MyApp(/*initialLink: initialLink*/));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final PendingDynamicLinkData? initialLink;
+  const MyApp({super.key, this.initialLink});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (ctx) => getIt<HomeBloc>()),
         BlocProvider(create: (ctx) => getIt<AccountBloc>()),
         BlocProvider(create: (ctx) => getIt<CommentBloc>()),
+        BlocProvider(create: (ctx) => getIt<PublicpageBloc>()),
+        BlocProvider(create: (ctx) => getIt<HashtagscreenBloc>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -66,7 +79,9 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         onGenerateRoute: (settings) => generateRoute(settings),
-        home: const SplashScreen(),
+        home: SplashScreen(
+          initialLink: initialLink,
+        ),
         // home: CommentPageScreen(),
       ),
     );
@@ -74,8 +89,9 @@ class MyApp extends StatelessWidget {
 }
 
 class SplashScreen extends StatefulWidget {
+  final PendingDynamicLinkData? initialLink;
   static const String routeName = '/splash-screen';
-  const SplashScreen({super.key});
+  const SplashScreen({super.key, this.initialLink});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -84,8 +100,24 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    chech();
     getUserAndNav();
     super.initState();
+  }
+
+  chech() async {
+    final PendingDynamicLinkData? initialLink =
+        await FirebaseDynamicLinks.instance.getInitialLink();
+    if (initialLink != null) {
+      navIndexChangeNotifier.value = 4;
+    }
+
+    FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) {
+      navIndexChangeNotifier.value = 4;
+    }).onError((error) {
+      // Handle errors
+      log(error.toString());
+    });
   }
 
   getUserAndNav() async {
@@ -101,10 +133,15 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacementNamed(context, SignInScreen.routeName);
       }, (UserModel val) {
         if (val.id != "") {
-          constusermodel = val;
+          constusermodel.value = val;
+          BlocProvider.of<HomeBloc>(context).add(const LoadHomeData());
           Timer(const Duration(milliseconds: 500), () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => MainPageScreen()));
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MainPageScreen(
+                          initialLink: widget.initialLink,
+                        )));
           });
         } else {
           Navigator.pushReplacementNamed(context, SignInScreen.routeName);

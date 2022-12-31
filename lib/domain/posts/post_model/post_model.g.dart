@@ -7,6 +7,8 @@ part of 'post_model.dart';
 // **************************************************************************
 
 PostModel _$PostModelFromJson(Map<String, dynamic> json) => PostModel(
+      posttype: json['posttype'] as String?,
+      id: json['_id'] as String?,
       userid: json['userid'] as String?,
       highvideourl: json['highvideourl'] as String?,
       midvideourl: json['midvideourl'] as String?,
@@ -18,17 +20,22 @@ PostModel _$PostModelFromJson(Map<String, dynamic> json) => PostModel(
           .toList(),
       posttime: json['posttime'] as String?,
       public: json['public'] as bool?,
+      pastpost: json['pastpost'] as String?,
+      nextpost: json['nextpost'] as String?,
       repost: json['repost'] as List<dynamic>?,
       mentions: json['mentions'] as List<dynamic>?,
-      like: json['like'] as List<dynamic>?,
+      like: (json['like'] as List<dynamic>?)?.map((e) => e as String).toList(),
       dislike: json['dislike'] as List<dynamic>?,
-      comments: json['comments'] as List<dynamic>?,
-      id: json['_id'] as String?,
+      comments: (json['comments'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       report: json['report'] as List<dynamic>?,
       v: json['__v'] as int?,
     );
 
 Map<String, dynamic> _$PostModelToJson(PostModel instance) => <String, dynamic>{
+      'posttype': instance.posttype,
+      '_id': instance.id,
       'userid': instance.userid,
       'highvideourl': instance.highvideourl,
       'midvideourl': instance.midvideourl,
@@ -38,12 +45,13 @@ Map<String, dynamic> _$PostModelToJson(PostModel instance) => <String, dynamic>{
       'hashtags': instance.hashtags,
       'posttime': instance.posttime,
       'public': instance.public,
+      'pastpost': instance.pastpost,
+      'nextpost': instance.nextpost,
       'repost': instance.repost,
       'mentions': instance.mentions,
       'like': instance.like,
       'dislike': instance.dislike,
       'comments': instance.comments,
-      '_id': instance.id,
       'report': instance.report,
       '__v': instance.v,
     };
