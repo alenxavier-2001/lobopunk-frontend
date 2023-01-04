@@ -3,8 +3,10 @@ import 'package:lobopunk/core/contasts.dart';
 class ApiEndPoints {
   static const auth = "${kBaseurl}auth/";
   static const getuserdata = "${kBaseurl}user/getuserdata/";
+  static const getuserdatabyid = "${kBaseurl}user/getuserdatabyid/";
   static const getusername = "${kBaseurl}user/getusername/";
   static const getuserposts = "${kBaseurl}getuserposts/";
+  static const getuserpostsbyid = "${kBaseurl}getuserpostsbyid/";
   static const edituserposts = "${kBaseurl}postediting/";
   static const updateuserdata = "${kBaseurl}user/updateuserdata/";
   static const updateusersociallink = "${kBaseurl}user/updateusersociallink/";

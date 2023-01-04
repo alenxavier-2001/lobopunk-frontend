@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lobopunk/application/account/account_bloc.dart';
 
 import 'package:lobopunk/core/color.dart';
 import 'package:lobopunk/domain/core/failures/main_failure.dart';
 import 'package:lobopunk/infrastructure/addpost/addpost_impl.dart';
+import 'package:lobopunk/infrastructure/common_impl/common_impl.dart';
 import 'package:lobopunk/presentation/addpost/post_upload.dart';
 import 'package:lobopunk/widgets/chipwidget.dart';
 import 'package:lobopunk/widgets/mysizedbox.dart';
@@ -99,10 +98,16 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         radius: width / 23,
                       ),
                     ),
-                    Text(
-                      "Please accept guideline",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400, fontSize: width / 22),
+                    InkWell(
+                      onTap: () {
+                        CommonImplementation().launchInBrowser(Uri.parse(
+                            "https://lobopunk-2d9c4.web.app/#/communityguidelines"));
+                      },
+                      child: Text(
+                        "Please accept guideline",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: width / 22),
+                      ),
                     )
                   ],
                 ),

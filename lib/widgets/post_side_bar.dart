@@ -34,10 +34,12 @@ List reportList = [
 class PostSideBar extends StatelessWidget {
   final Widget likeButtonWidget;
   final int index;
+  final bool ispost2;
   const PostSideBar({
     super.key,
     required this.likeButtonWidget,
     required this.index,
+    required this.ispost2,
   });
 
   @override
@@ -167,8 +169,8 @@ class PostSideBar extends StatelessWidget {
                           if ((postdata.dislike!
                               .contains(constusermodel.value.id))) {
                           } else {
-                            PostImplementation()
-                                .dislikePost(postdata.id.toString(), index);
+                            PostImplementation().dislikePost(
+                                postdata.id.toString(), index, ispost2);
                           }
                         },
                         child: Icon(

@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:lobopunk/widgets/post_side_bar.dart';
+import 'package:path/path.dart';
 import 'package:video_player/video_player.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoTileWidget extends StatefulWidget {
   final int snappedPageIndex;
@@ -21,7 +23,7 @@ class VideoTileWidget extends StatefulWidget {
 class _VideoTileWidgetState extends State<VideoTileWidget> {
   late VideoPlayerController _videoPlayerController;
   late Future _initializeVideoplayer;
-
+  bool isdispose = false;
   @override
   void initState() {
     _videoPlayerController = VideoPlayerController.network(widget.url);
@@ -33,6 +35,7 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
 
   @override
   void dispose() {
+    isdispose = true;
     _videoPlayerController.dispose();
     super.dispose();
   }
@@ -50,10 +53,19 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
       future: _initializeVideoplayer,
       builder: ((context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return InkWell(
-            onFocusChange: (val) {
-              if (val) {
-                _videoPlayerController.pause();
+          return VisibilityDetector(
+            key: Key("$url${widget.snappedPageIndex}"),
+            onVisibilityChanged: (VisibilityInfo info) {
+              if (info.visibleFraction == 0) {
+                (_videoPlayerController.value.isInitialized &&
+                        _videoPlayerController.value.isPlaying &&
+                        isdispose == false)
+                    ? _videoPlayerController.pause()
+                    : null;
+              } else {
+                (_videoPlayerController.value.isInitialized)
+                    ? _videoPlayerController.play()
+                    : null;
               }
             },
             child: Stack(

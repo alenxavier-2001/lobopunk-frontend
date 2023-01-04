@@ -4,8 +4,10 @@ import 'package:lobopunk/domain/posts/post_model/post_model.dart';
 import 'package:lobopunk/domain/posts/posts_page_model/posts_page_model.dart';
 
 abstract class PostService {
-  Future<Either<MainFailure, PostModel>> likePost(String postid, int index);
-  Future<Either<MainFailure, PostModel>> dislikePost(String postid, int index);
+  Future<Either<MainFailure, PostModel>> likePost(
+      String postid, int index, bool ispost2);
+  Future<Either<MainFailure, PostModel>> dislikePost(
+      String postid, int index, bool ispost2);
   Future<String> postShare(String postid);
   Future<Either<MainFailure, PostsPageModel>> continuePost(
       String postid, int pageno);

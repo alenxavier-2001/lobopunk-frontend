@@ -20,7 +20,7 @@ import 'package:http/http.dart' as http;
 class PostImplementation implements PostService {
   @override
   Future<Either<MainFailure, PostModel>> dislikePost(
-      String postid, int index) async {
+      String postid, int index, bool ispost2) async {
     try {
       PostModel newModel = postListNotifier.value[index];
 
@@ -55,7 +55,7 @@ class PostImplementation implements PostService {
 
   @override
   Future<Either<MainFailure, PostModel>> likePost(
-      String postid, int index) async {
+      String postid, int index, bool ispost2) async {
     try {
       log(postListNotifier.value[index].like.toString());
       PostModel newModel = postListNotifier.value[index];

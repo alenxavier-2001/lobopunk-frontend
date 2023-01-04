@@ -1,57 +1,29 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lobopunk/application/account/account_bloc.dart';
-import 'package:lobopunk/application/comment/comment_bloc.dart';
+
+import 'package:lobopunk/application/profile_view/profileview_bloc.dart';
 import 'package:lobopunk/core/color.dart';
 import 'package:lobopunk/core/contasts.dart';
-import 'package:lobopunk/core/k_m_b_converter.dart';
-import 'package:lobopunk/domain/posts/post_model/post_model.dart';
-import 'package:lobopunk/domain/posts/posts_page_model/posts_page_model.dart';
 import 'package:lobopunk/domain/user/user_model/user_model.dart';
-import 'package:lobopunk/infrastructure/auth/auth_impl.dart';
-import 'package:lobopunk/infrastructure/file_picker_impl/file_picker_impl.dart';
 import 'package:lobopunk/infrastructure/userdetails/user_impl.dart';
 import 'package:lobopunk/presentation/account/widgets/account_count_section.dart';
-import 'package:lobopunk/presentation/account/widgets/account_post_setion.dart';
-import 'package:lobopunk/presentation/account/widgets/account_settings_screen.dart';
 import 'package:lobopunk/presentation/account/widgets/edit_account.dart';
-import 'package:lobopunk/presentation/account/widgets/social_link_add.dart';
-
-import 'package:lobopunk/presentation/auth/signin/signin.dart';
+import 'package:lobopunk/presentation/profile_view/widgets/profile_post_setion.dart';
 import 'package:lobopunk/widgets/curved_elevated_button.dart';
 import 'package:lobopunk/widgets/custom_loader.dart';
 import 'package:lobopunk/widgets/custom_loading_animation.dart';
-import 'package:lobopunk/widgets/mysizedbox.dart';
 import 'package:lobopunk/widgets/mysizedbox70.dart';
-import 'package:lobopunk/widgets/textformfieldcurved.dart';
-import 'package:lottie/lottie.dart';
 
-class AccountScreen extends StatelessWidget {
-  static const String routeName = '/account-screen';
-  const AccountScreen({super.key});
+class ProfileViewScreen extends StatelessWidget {
+  const ProfileViewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      BlocProvider.of<AccountBloc>(context).add(const LoadUserData());
-      Future.delayed(const Duration(seconds: 1), () {
-        BlocProvider.of<AccountBloc>(context).add(const LoadUserPosts());
-      });
-    });
-
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   actions: [IconButton(onPressed: () {}, icon: Icon(Icons.settings))],
-      // ),
-      body: BlocBuilder<AccountBloc, AccountState>(
+      body: BlocBuilder<ProfileviewBloc, ProfileviewState>(
         builder: (context, state) {
           if (state.isLoading) {
             return const CustomLoader();
@@ -78,6 +50,14 @@ class AccountScreen extends StatelessWidget {
                                 width: width,
                                 decoration: const BoxDecoration(
                                   color: Colors.grey,
+                                  // image: (usedata.profileimage == "" ||
+                                  //         usedata.profileimage == null)
+                                  //     ? null
+                                  //     : DecorationImage(
+                                  //         image: NetworkImage(
+                                  //             "$kBaseurl${usedata.profileimage}"),
+                                  //         fit: BoxFit.cover,
+                                  //       ),
                                 ),
                                 child: (usedata.profileimage == "" ||
                                         usedata.profileimage == null)
@@ -96,17 +76,13 @@ class AccountScreen extends StatelessWidget {
                                       ),
                               ),
                               Align(
-                                alignment: Alignment.topRight,
+                                alignment: Alignment.topLeft,
                                 child: IconButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const AccountSettingsScreen()));
+                                      Navigator.pop(context);
                                     },
                                     icon: Icon(
-                                      Icons.settings,
+                                      Icons.arrow_back_ios,
                                       color: Colors.white,
                                       size: width / 13,
                                     )),
@@ -224,18 +200,29 @@ class AccountScreen extends StatelessWidget {
                                     children: [
                                       SizedBox(
                                         width: width / 2.6,
-                                        child: CurvedElevatedButton(
-                                          fontColor: Colors.white,
-                                          background: Colors.black,
-                                          text: "Edit profile",
-                                          onpress: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const EditProfileScreen()));
-                                          },
-                                        ),
+                                        child: ValueListenableBuilder(
+                                            valueListenable: constusermodel,
+                                            builder: (context,
+                                                UserModel currentuserdata, _) {
+                                              return CurvedElevatedButton(
+                                                fontColor: Colors.white,
+                                                background: (currentuserdata
+                                                        .punking!
+                                                        .contains(usedata.id
+                                                            .toString()))
+                                                    ? Colors.black
+                                                    : appColor,
+                                                text: (currentuserdata.punking!
+                                                        .contains(usedata.id
+                                                            .toString()))
+                                                    ? "Punked"
+                                                    : "Punk",
+                                                onpress: () {
+                                                  UserImplementation().punkUser(
+                                                      usedata.id.toString());
+                                                },
+                                              );
+                                            }),
                                       ),
                                       SizedBox(
                                         width: width / 2.6,
@@ -257,7 +244,74 @@ class AccountScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                                 builder: ((context) {
-                                                  return const SocialLinkAddWidget();
+                                                  return SizedBox(
+                                                    height: height / 7,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        (usedata.socailmedialinks![
+                                                                    0] ==
+                                                                "")
+                                                            ? Container()
+                                                            : Image.asset(
+                                                                "assets/instagram.png",
+                                                                width:
+                                                                    width / 7,
+                                                                height:
+                                                                    height / 8,
+                                                              ),
+                                                        (usedata.socailmedialinks![
+                                                                    1] ==
+                                                                "")
+                                                            ? Container()
+                                                            : Image.asset(
+                                                                "assets/youtube.png",
+                                                                width:
+                                                                    width / 7,
+                                                                height:
+                                                                    height / 8,
+                                                              ),
+                                                        (usedata.socailmedialinks![
+                                                                    2] ==
+                                                                "")
+                                                            ? Container()
+                                                            : Image.asset(
+                                                                "assets/twitter.png",
+                                                                width:
+                                                                    width / 7,
+                                                                height:
+                                                                    height / 8,
+                                                              ),
+                                                        (usedata.socailmedialinks![
+                                                                    3] ==
+                                                                "")
+                                                            ? Container()
+                                                            : Image.asset(
+                                                                "assets/github.png",
+                                                                width:
+                                                                    width / 7,
+                                                                height:
+                                                                    height / 8,
+                                                              ),
+                                                        (usedata.socailmedialinks![
+                                                                    4] ==
+                                                                "")
+                                                            ? Container()
+                                                            : Image.asset(
+                                                                "assets/email.png",
+                                                                width:
+                                                                    width / 7,
+                                                                height:
+                                                                    height / 8,
+                                                              ),
+                                                      ],
+                                                    ),
+                                                  );
                                                 }));
                                           },
                                         ),
@@ -271,49 +325,9 @@ class AccountScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-
-                      // Center(
-                      //   child: InkWell(
-                      //     onTap: () async {
-                      //       final res = await FilePickerImplementation().addImage();
-                      //       res.fold((l) {
-                      //         ScaffoldMessenger.of(context).showSnackBar(
-                      //             const SnackBar(content: Text('some error')));
-                      //       }, (File file) async {
-                      //         BlocProvider.of<AccountBloc>(context)
-                      //             .add(ChangeProfileImage(file: file));
-                      //       });
-                      //     },
-                      //     child: CircleAvatar(
-                      //       radius: width / 6,
-                      //       backgroundColor: Colors.grey.shade200,
-                      //       backgroundImage: (usedata.profileimage == "" ||
-                      //               usedata.profileimage == null)
-                      //           ? null
-                      //           : NetworkImage("$kBaseurl${usedata.profileimage}"),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Text(usedata.email.toString()),
-                      // Text(usedata.id.toString()),
-                      // Text(usedata.name.toString()),
-                      // Text(usedata.username.toString()),
-                      // ElevatedButton(
-                      //     onPressed: () async {
-                      //       final res = await AuthImplementation().signOut();
-                      //       res.fold((l) {
-                      //         ScaffoldMessenger.of(context).showSnackBar(
-                      //             const SnackBar(content: Text('some error')));
-                      //       }, (bool r) {
-                      //         log("dchdc  dc");
-                      //         Navigator.pushReplacementNamed(
-                      //             context, SignInScreen.routeName);
-                      //       });
-                      //     },
-                      //     child: const Text("Log out")),
                     ],
                   ),
-                  const AccountPostSection(),
+                  const ProfileViewPostSection(),
                   const MySizedBox70(),
                 ],
               ),

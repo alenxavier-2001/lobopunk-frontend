@@ -97,6 +97,35 @@ class UserImplementation extends UserServices {
     }
   }
 
+  // user data by userid
+
+  @override
+  Future<Either<MainFailure, UserModel>> getUserDatabyid(String userid) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String token = prefs.getString('token') ?? "";
+      final url = Uri.parse("${ApiEndPoints.getuserdatabyid}$userid");
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'x-auth-token': token,
+          // 'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final result = UserModel.fromJson(jsonDecode(response.body));
+        return Right(result);
+      } else {
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
+      }
+    } catch (e) {
+      log(e.toString());
+      return Left(MainFailure.clientFailure(e.toString()));
+    }
+  }
+
   @override
   Future<Either<MainFailure, UserModel>> editProfile(
       {required Map<String, dynamic> data}) async {
@@ -151,12 +180,47 @@ class UserImplementation extends UserServices {
     }
   }
 
+//get my posts
   @override
   Future<Either<MainFailure, PostsPageModel>> getMyPosts() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final String token = prefs.getString('token') ?? "";
       final url = Uri.parse(ApiEndPoints.getuserposts);
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'x-auth-token': token,
+          // 'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final result = PostsPageModel.fromJson(jsonDecode(response.body));
+
+        return Right(result);
+      } else if (response.statusCode == 300) {
+        final result = PostsPageModel(page: 0, results: []);
+
+        return Right(result);
+      } else {
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
+      }
+    } catch (e) {
+      log(e.toString());
+      return Left(MainFailure.clientFailure(e.toString()));
+    }
+  }
+
+  //get my posts by userid
+  @override
+  Future<Either<MainFailure, PostsPageModel>> getMyPostsbyId(
+      String userid) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String token = prefs.getString('token') ?? "";
+      final url = Uri.parse("${ApiEndPoints.getuserpostsbyid}$userid");
       final response = await http.get(
         url,
         headers: <String, String>{

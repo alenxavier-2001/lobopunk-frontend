@@ -46,7 +46,7 @@ dependencies:
   http: ^0.13.5
   image_picker: ^0.8.6
   injectable: 
-  intl: ^0.17.0
+  intl: ^0.18.0
   json_annotation: ^4.7.0
   json_serializable: ^6.3.1
   lottie: ^2.0.0
@@ -57,6 +57,8 @@ dependencies:
   video_compress: ^3.1.2
   video_player: ^2.4.8
   firebase_core: ^2.4.0
+  visibility_detector: ^0.3.3
+  url_launcher: ^6.1.7
   
 
 dev_dependencies:

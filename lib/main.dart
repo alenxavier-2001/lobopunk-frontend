@@ -9,6 +9,7 @@ import 'package:lobopunk/application/account/account_bloc.dart';
 import 'package:lobopunk/application/comment/comment_bloc.dart';
 import 'package:lobopunk/application/hashtag_screen/hashtagscreen_bloc.dart';
 import 'package:lobopunk/application/home/home_bloc.dart';
+import 'package:lobopunk/application/profile_view/profileview_bloc.dart';
 import 'package:lobopunk/application/publicpage/publicpage_bloc.dart';
 import 'package:lobopunk/core/common_notifer.dart';
 import 'package:lobopunk/core/contasts.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (ctx) => getIt<CommentBloc>()),
         BlocProvider(create: (ctx) => getIt<PublicpageBloc>()),
         BlocProvider(create: (ctx) => getIt<HashtagscreenBloc>()),
+        BlocProvider(create: (ctx) => getIt<ProfileviewBloc>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -15,9 +15,11 @@ abstract class UserServices {
       {required Map<String, dynamic> data});
   Future<Either<MainFailure, PostModel>> editPost(Map<String, dynamic> data);
   Future<Either<MainFailure, PostsPageModel>> getMyPosts();
+  Future<Either<MainFailure, PostsPageModel>> getMyPostsbyId(String userid);
   Future<Either<MainFailure, Map<String, dynamic>>> getUserName(
       {required String userid});
   Future<Either<MainFailure, UserModel>> getUseData();
+  Future<Either<MainFailure, UserModel>> getUserDatabyid(String userid);
   //punk a user
   Future<Either<MainFailure, UserModel>> punkUser(String userid);
 }

@@ -1,12 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lobopunk/application/home/home_bloc.dart';
 import 'package:lobopunk/core/color.dart';
 import 'package:lobopunk/domain/auth/auth_model/auth_model.dart';
 import 'package:lobopunk/domain/core/failures/main_failure.dart';
 
 import 'package:lobopunk/infrastructure/auth/auth_impl.dart';
-import 'package:lobopunk/presentation/account/account_screen.dart';
+import 'package:lobopunk/infrastructure/common_impl/common_impl.dart';
+
 import 'package:lobopunk/presentation/main_page/main_page_screen.dart';
 import 'package:lobopunk/widgets/custom_loader.dart';
 
@@ -202,11 +203,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   )),
               const MySizedBox70(),
               Center(
-                child: Text(
-                  "By clicking the continue button, you accept the privacy policy and terms and conditions",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: width / 25, fontWeight: FontWeight.w500),
+                child: InkWell(
+                  onTap: () {
+                    CommonImplementation().launchInBrowser(Uri.parse(
+                        "https://lobopunk-2d9c4.web.app/#/privacypolicy"));
+                  },
+                  child: Text(
+                    "By clicking the continue button, you accept the privacy policy and terms and conditions",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: width / 25, fontWeight: FontWeight.w500),
+                  ),
                 ),
               ),
               const MySizedBox70(),
@@ -245,6 +252,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   await SharedPreferences.getInstance();
                               await prefs.setString('token', token).then((_) {
                                 Navigator.pop(context);
+                                BlocProvider.of<HomeBloc>(context)
+                                    .add(const LoadHomeData());
 
                                 Navigator.push(
                                     context,

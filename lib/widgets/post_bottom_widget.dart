@@ -6,9 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lobopunk/application/account/account_bloc.dart';
 import 'package:lobopunk/application/comment/comment_bloc.dart';
+import 'package:lobopunk/application/profile_view/profileview_bloc.dart';
+import 'package:lobopunk/core/contasts.dart';
 import 'package:lobopunk/core/usernamenotifer.dart';
 import 'package:lobopunk/domain/posts/post_model/post_model.dart';
 import 'package:lobopunk/infrastructure/userdetails/user_impl.dart';
+import 'package:lobopunk/presentation/main_page/bottom_nav.dart';
+import 'package:lobopunk/presentation/profile_view/profile_view_screen.dart';
 import 'package:lobopunk/widgets/comment_page.dart';
 import 'package:lobopunk/widgets/mysizedbox70.dart';
 
@@ -27,23 +31,38 @@ class PostBottomWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          ValueListenableBuilder(
-              valueListenable: usernamlists,
-              builder: (context, Map<String, dynamic> usernamelists, _) {
-                (usernamelists.containsKey(data.userid))
-                    ? null
-                    : UserImplementation()
-                        .getUserName(userid: data.userid.toString());
-                return Text(
+          InkWell(
+            onTap: () {
+              if (data.userid == constusermodel.value.id) {
+                navIndexChangeNotifier.value = 4;
+              } else {
+                BlocProvider.of<ProfileviewBloc>(context)
+                    .add(LoadData(userid: data.userid.toString()));
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ProfileViewScreen()));
+              }
+            },
+            child: ValueListenableBuilder(
+                valueListenable: usernamlists,
+                builder: (context, Map<String, dynamic> usernamelists, _) {
                   (usernamelists.containsKey(data.userid))
-                      ? usernamelists[data.userid]
-                      : data.userid,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium!
-                      .copyWith(fontSize: width / 20),
-                );
-              }),
+                      ? null
+                      : UserImplementation()
+                          .getUserName(userid: data.userid.toString());
+                  return Text(
+                    (usernamelists.containsKey(data.userid))
+                        ? usernamelists[data.userid]
+                        : data.userid,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineMedium!
+                        .copyWith(fontSize: width / 20),
+                  );
+                }),
+          ),
           SizedBox(
             height: height / 70,
           ),
@@ -56,7 +75,7 @@ class PostBottomWidget extends StatelessWidget {
             expandText: 'more',
             collapseText: 'less',
             expandOnTextTap: true,
-            maxLines: 2,
+            maxLines: 3,
             collapseOnTextTap: true,
             linkColor: Colors.grey,
           ),

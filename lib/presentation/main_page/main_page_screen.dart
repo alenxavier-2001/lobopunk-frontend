@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lobopunk/core/basic_scafoldmsg.dart';
 import 'package:lobopunk/presentation/account/account_screen.dart';
 import 'package:lobopunk/presentation/home/home_screen.dart';
@@ -50,15 +51,29 @@ class MainPageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: ValueListenableBuilder(
-        valueListenable: navIndexChangeNotifier,
-        builder: ((context, int index, _) {
-          return _pages[index];
-        }),
+    return WillPopScope(
+      onWillPop: () async {
+        if (navIndexChangeNotifier.value == 0) {
+          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        } else {
+          if (navIndexChangeNotifier.value == 3) {
+            navIndexChangeNotifier.value = navIndexChangeNotifier.value - 2;
+          } else {
+            navIndexChangeNotifier.value = navIndexChangeNotifier.value - 1;
+          }
+        }
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: ValueListenableBuilder(
+          valueListenable: navIndexChangeNotifier,
+          builder: ((context, int index, _) {
+            return _pages[index];
+          }),
+        ),
+        bottomNavigationBar: const BottomNavigation(),
       ),
-      bottomNavigationBar: const BottomNavigation(),
     );
   }
 }

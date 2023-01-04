@@ -26,6 +26,7 @@ class PostWidget extends StatefulWidget {
     required this.url,
     this.isRight = false,
     this.isLeft = false,
+    this.ispost2 = false,
   }) : super(key: key);
 
   final int index;
@@ -33,6 +34,7 @@ class PostWidget extends StatefulWidget {
   final String url;
   final bool isRight;
   final bool isLeft;
+  final bool ispost2;
 
   @override
   State<PostWidget> createState() => _PostWidgetState();
@@ -55,10 +57,8 @@ class _PostWidgetState extends State<PostWidget> {
       },
     );
     return (isreported)
-        ? Container(
-            child: Center(
-              child: Text("This post is reportrd by you"),
-            ),
+        ? const Center(
+            child: Text("This post is reportrd by you"),
           )
         : ValueListenableBuilder(
             valueListenable: snappedindexhome,
@@ -161,6 +161,7 @@ class _PostWidgetState extends State<PostWidget> {
                                     child: SizedBox(
                                       height: height / 1.07,
                                       child: PostSideBar(
+                                        ispost2: widget.ispost2,
                                         index: widget.index,
                                         likeButtonWidget: LikeAnimation(
                                           smallLike: false,
@@ -172,7 +173,8 @@ class _PostWidgetState extends State<PostWidget> {
                                                 } else {
                                                   PostImplementation().likePost(
                                                       widget.data.id.toString(),
-                                                      widget.index);
+                                                      widget.index,
+                                                      widget.ispost2);
                                                 }
                                               },
                                               child: Icon(
@@ -216,7 +218,8 @@ class _PostWidgetState extends State<PostWidget> {
                                   } else {
                                     PostImplementation().likePost(
                                         widget.data.id.toString(),
-                                        widget.index);
+                                        widget.index,
+                                        widget.ispost2);
                                   }
                                 },
                                 child: const Icon(Icons.favorite_sharp,

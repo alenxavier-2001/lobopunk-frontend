@@ -12,6 +12,8 @@ import 'package:lobopunk/application/comment/comment_bloc.dart' as _i25;
 import 'package:lobopunk/application/hashtag_screen/hashtagscreen_bloc.dart'
     as _i26;
 import 'package:lobopunk/application/home/home_bloc.dart' as _i27;
+import 'package:lobopunk/application/profile_view/profileview_bloc.dart'
+    as _i28;
 import 'package:lobopunk/application/publicpage/publicpage_bloc.dart' as _i21;
 import 'package:lobopunk/domain/addpost/addpost_services.dart' as _i3;
 import 'package:lobopunk/domain/auth/auth_services.dart' as _i5;
@@ -74,6 +76,8 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i26.HashtagscreenBloc>(
         () => _i26.HashtagscreenBloc(gh<_i17.PostService>()));
     gh.factory<_i27.HomeBloc>(() => _i27.HomeBloc(gh<_i15.HomeServices>()));
+    gh.factory<_i28.ProfileviewBloc>(
+        () => _i28.ProfileviewBloc(gh<_i22.UserServices>()));
     return this;
   }
 }
