@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'account_bloc.dart';
 
@@ -525,6 +525,7 @@ class _$EditProfile implements EditProfile {
   final Map<String, dynamic> _data;
   @override
   Map<String, dynamic> get data {
+    if (_data is EqualUnmodifiableMapView) return _data;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_data);
   }
@@ -683,6 +684,7 @@ class _$EditSocialLink implements EditSocialLink {
   final Map<String, dynamic> _data;
   @override
   Map<String, dynamic> get data {
+    if (_data is EqualUnmodifiableMapView) return _data;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_data);
   }
@@ -806,7 +808,8 @@ mixin _$AccountState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
   UserModel get userDetails => throw _privateConstructorUsedError;
-  PostsPageModel get userposts => throw _privateConstructorUsedError;
+  List<PostModel> get userposts => throw _privateConstructorUsedError;
+  List<PostModel> get splitposts => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AccountStateCopyWith<AccountState> get copyWith =>
@@ -823,7 +826,8 @@ abstract class $AccountStateCopyWith<$Res> {
       {bool isLoading,
       bool hasError,
       UserModel userDetails,
-      PostsPageModel userposts});
+      List<PostModel> userposts,
+      List<PostModel> splitposts});
 }
 
 /// @nodoc
@@ -843,6 +847,7 @@ class _$AccountStateCopyWithImpl<$Res, $Val extends AccountState>
     Object? hasError = null,
     Object? userDetails = null,
     Object? userposts = null,
+    Object? splitposts = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -860,7 +865,11 @@ class _$AccountStateCopyWithImpl<$Res, $Val extends AccountState>
       userposts: null == userposts
           ? _value.userposts
           : userposts // ignore: cast_nullable_to_non_nullable
-              as PostsPageModel,
+              as List<PostModel>,
+      splitposts: null == splitposts
+          ? _value.splitposts
+          : splitposts // ignore: cast_nullable_to_non_nullable
+              as List<PostModel>,
     ) as $Val);
   }
 }
@@ -877,7 +886,8 @@ abstract class _$$_AccountStateCopyWith<$Res>
       {bool isLoading,
       bool hasError,
       UserModel userDetails,
-      PostsPageModel userposts});
+      List<PostModel> userposts,
+      List<PostModel> splitposts});
 }
 
 /// @nodoc
@@ -895,6 +905,7 @@ class __$$_AccountStateCopyWithImpl<$Res>
     Object? hasError = null,
     Object? userDetails = null,
     Object? userposts = null,
+    Object? splitposts = null,
   }) {
     return _then(_$_AccountState(
       isLoading: null == isLoading
@@ -910,9 +921,13 @@ class __$$_AccountStateCopyWithImpl<$Res>
           : userDetails // ignore: cast_nullable_to_non_nullable
               as UserModel,
       userposts: null == userposts
-          ? _value.userposts
+          ? _value._userposts
           : userposts // ignore: cast_nullable_to_non_nullable
-              as PostsPageModel,
+              as List<PostModel>,
+      splitposts: null == splitposts
+          ? _value._splitposts
+          : splitposts // ignore: cast_nullable_to_non_nullable
+              as List<PostModel>,
     ));
   }
 }
@@ -924,7 +939,10 @@ class _$_AccountState implements _AccountState {
       {required this.isLoading,
       required this.hasError,
       required this.userDetails,
-      required this.userposts});
+      required final List<PostModel> userposts,
+      required final List<PostModel> splitposts})
+      : _userposts = userposts,
+        _splitposts = splitposts;
 
   @override
   final bool isLoading;
@@ -932,12 +950,25 @@ class _$_AccountState implements _AccountState {
   final bool hasError;
   @override
   final UserModel userDetails;
+  final List<PostModel> _userposts;
   @override
-  final PostsPageModel userposts;
+  List<PostModel> get userposts {
+    if (_userposts is EqualUnmodifiableListView) return _userposts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_userposts);
+  }
+
+  final List<PostModel> _splitposts;
+  @override
+  List<PostModel> get splitposts {
+    if (_splitposts is EqualUnmodifiableListView) return _splitposts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_splitposts);
+  }
 
   @override
   String toString() {
-    return 'AccountState(isLoading: $isLoading, hasError: $hasError, userDetails: $userDetails, userposts: $userposts)';
+    return 'AccountState(isLoading: $isLoading, hasError: $hasError, userDetails: $userDetails, userposts: $userposts, splitposts: $splitposts)';
   }
 
   @override
@@ -951,13 +982,20 @@ class _$_AccountState implements _AccountState {
                 other.hasError == hasError) &&
             (identical(other.userDetails, userDetails) ||
                 other.userDetails == userDetails) &&
-            (identical(other.userposts, userposts) ||
-                other.userposts == userposts));
+            const DeepCollectionEquality()
+                .equals(other._userposts, _userposts) &&
+            const DeepCollectionEquality()
+                .equals(other._splitposts, _splitposts));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, isLoading, hasError, userDetails, userposts);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      hasError,
+      userDetails,
+      const DeepCollectionEquality().hash(_userposts),
+      const DeepCollectionEquality().hash(_splitposts));
 
   @JsonKey(ignore: true)
   @override
@@ -971,7 +1009,8 @@ abstract class _AccountState implements AccountState {
       {required final bool isLoading,
       required final bool hasError,
       required final UserModel userDetails,
-      required final PostsPageModel userposts}) = _$_AccountState;
+      required final List<PostModel> userposts,
+      required final List<PostModel> splitposts}) = _$_AccountState;
 
   @override
   bool get isLoading;
@@ -980,7 +1019,9 @@ abstract class _AccountState implements AccountState {
   @override
   UserModel get userDetails;
   @override
-  PostsPageModel get userposts;
+  List<PostModel> get userposts;
+  @override
+  List<PostModel> get splitposts;
   @override
   @JsonKey(ignore: true)
   _$$_AccountStateCopyWith<_$_AccountState> get copyWith =>

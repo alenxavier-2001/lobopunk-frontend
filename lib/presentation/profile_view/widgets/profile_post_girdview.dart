@@ -13,9 +13,13 @@ import 'package:lobopunk/widgets/custom_loader.dart';
 
 class ProfileViewPostGirdView extends StatelessWidget {
   final bool isprev;
+  final bool isSplits;
   final String currentpostid;
   const ProfileViewPostGirdView(
-      {Key? key, this.isprev = false, this.currentpostid = ""})
+      {Key? key,
+      this.isprev = false,
+      this.currentpostid = "",
+      required this.isSplits})
       : super(key: key);
 
   @override
@@ -31,7 +35,8 @@ class ProfileViewPostGirdView extends StatelessWidget {
           child: Text("Error Occur"),
         );
       } else {
-        List<PostModel> userposts = state.userposts.results ?? [];
+        List<PostModel> userposts =
+            isSplits ? state.splitposts : state.userposts;
 
         return GridView.builder(
             itemCount: userposts.length,
@@ -66,6 +71,7 @@ class ProfileViewPostGirdView extends StatelessWidget {
                                 MaterialPageRoute(
                                     builder: (context) => ProfilePostPageView(
                                           pagenumber: index,
+                                          isSplits: isSplits,
                                         )));
                           }
                         },

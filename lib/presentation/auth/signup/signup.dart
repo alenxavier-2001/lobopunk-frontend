@@ -255,11 +255,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 BlocProvider.of<HomeBloc>(context)
                                     .add(const LoadHomeData());
 
-                                Navigator.push(
-                                    context,
+                                Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            MainPageScreen()));
+                                        builder: (context) => MainPageScreen()),
+                                    (Route<dynamic> route) => false);
                               });
                             });
                           } else {

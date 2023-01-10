@@ -4,36 +4,49 @@ part 'user_model.g.dart';
 
 @JsonSerializable()
 class UserModel {
+  List<dynamic>? favaccounts;
+  List<dynamic>? favhashtags;
+  List<dynamic>? reposts;
+  List<dynamic>? repostsentrequests;
+  List<dynamic>? repostreceivedrequests;
+  @JsonKey(name: '_id')
+  String? id;
   String? username;
   String? name;
   String? email;
-
+  String? password;
   String? bio;
   String? phonenumber;
   String? profileimage;
-  bool? isverified;
-  List<dynamic>? socailmedialinks;
-  List<dynamic>? punkers;
-  List<dynamic>? punking;
+  List<String>? socailmedialinks;
+  List<String>? punkers;
+  List<String>? punking;
   String? profiletheme;
   String? thememusic;
   int? totallikes;
-  List<dynamic>? likedposts;
+  List<String>? likedposts;
   List<dynamic>? savedposts;
-  List<dynamic>? myposts;
+  List<String>? myposts;
   List<dynamic>? notification;
-  @JsonKey(name: '_id')
-  String? id;
   List<dynamic>? report;
+  @JsonKey(name: '__v')
+  int? v;
+  bool? isverified;
 
   UserModel({
+    this.favaccounts,
+    this.favhashtags,
+    this.reposts,
+    this.repostsentrequests,
+    this.repostreceivedrequests,
+    this.id,
     this.username,
     this.name,
     this.email,
+    this.password,
     this.bio,
     this.phonenumber,
     this.profileimage,
-    this.isverified,
     this.socailmedialinks,
     this.punkers,
     this.punking,
@@ -44,8 +57,9 @@ class UserModel {
     this.savedposts,
     this.myposts,
     this.notification,
-    this.id,
     this.report,
+    this.v,
+    this.isverified,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {

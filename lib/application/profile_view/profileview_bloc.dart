@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:lobopunk/domain/core/failures/main_failure.dart';
+import 'package:lobopunk/domain/posts/post_model/post_model.dart';
 import 'package:lobopunk/domain/posts/posts_page_model/posts_page_model.dart';
 import 'package:lobopunk/domain/user/user_model/user_model.dart';
 import 'package:lobopunk/domain/user/user_services.dart';
@@ -16,12 +17,13 @@ part 'profileview_bloc.freezed.dart';
 class ProfileviewBloc extends Bloc<ProfileviewEvent, ProfileviewState> {
   final UserServices _userService;
   ProfileviewBloc(this._userService) : super(ProfileviewState.initial()) {
-    on<LoadData>((event, emit) async {
+    on<LoadProfileData>((event, emit) async {
       emit(ProfileviewState(
           isLoading: true,
           hasError: false,
           userDetails: UserModel(),
-          userposts: PostsPageModel()));
+          userposts: [],
+          splitposts: []));
 
       //get user data
       final result = await _userService.getUserDatabyid(event.userid);
@@ -33,14 +35,16 @@ class ProfileviewBloc extends Bloc<ProfileviewEvent, ProfileviewState> {
             isLoading: false,
             hasError: true,
             userDetails: UserModel(),
-            userposts: PostsPageModel());
+            userposts: [],
+            splitposts: []);
       }, (UserModel resp) {
         log(resp.username.toString());
         return ProfileviewState(
             isLoading: false,
             hasError: false,
             userDetails: resp,
-            userposts: PostsPageModel());
+            userposts: [],
+            splitposts: []);
       });
       // const LoadUserPosts();
 
@@ -55,13 +59,26 @@ class ProfileviewBloc extends Bloc<ProfileviewEvent, ProfileviewState> {
             isLoading: false,
             hasError: true,
             userDetails: state.userDetails,
-            userposts: state.userposts);
+            userposts: state.userposts,
+            splitposts: state.splitposts);
       }, (PostsPageModel resp) {
+        List<PostModel> posts = resp.results ?? [];
+        List<PostModel> userposts = [];
+        List<PostModel> splitposts = [];
+
+        for (int i = 0; i < posts.length; i++) {
+          if (posts[i].isrepost == true) {
+            splitposts.add(posts[i]);
+          } else {
+            userposts.add(posts[i]);
+          }
+        }
         return ProfileviewState(
-            isLoading: false,
-            hasError: false,
+            isLoading: state.isLoading,
+            hasError: state.isLoading,
             userDetails: state.userDetails,
-            userposts: resp);
+            userposts: userposts,
+            splitposts: splitposts);
       });
       // const LoadUserPosts();
 

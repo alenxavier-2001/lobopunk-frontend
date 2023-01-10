@@ -1,21 +1,35 @@
-import 'package:get_it/get_it.dart';
-import 'package:injectable/injectable.dart';
+// import 'package:get_it/get_it.dart';
+// import 'package:injectable/injectable.dart';
 
-import 'injectable.config.dart';
+// import 'injectable.config.dart';
 
+// // final getIt = GetIt.instance;
+
+// // @InjectableInit()
+// // Future<void> configureInjection() async {
+// //   $initGetIt(getIt, environment: Environment.prod);
+// // }
 // final getIt = GetIt.instance;
 
-// @InjectableInit()
+// @InjectableInit(
+//   initializerName: 'init', // default
+//   preferRelativeImports: true, // default
+//   asExtension: false, // default
+// )
 // Future<void> configureInjection() async {
-//   $initGetIt(getIt, environment: Environment.prod);
+//   getIt.init(environment: Environment.prod);
 // }
+
+import 'package:get_it/get_it.dart';
+import 'package:injectable/injectable.dart';
+import 'injectable.config.dart';
+
 final getIt = GetIt.instance;
 
 @InjectableInit(
   initializerName: 'init', // default
   preferRelativeImports: true, // default
-  asExtension: false, // default
+  asExtension: true, // default
 )
-Future<void> configureInjection() async {
-  getIt.init(environment: Environment.prod);
-}
+@InjectableInit(generateForDir: ['prod'])
+void configureDependencies() => getIt.init();

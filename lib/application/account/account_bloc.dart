@@ -28,7 +28,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
           isLoading: true,
           hasError: false,
           userDetails: UserModel(),
-          userposts: PostsPageModel()));
+          userposts: [],
+          splitposts: []));
 
       //get user data
       final result = await _userService.getUseData();
@@ -40,13 +41,15 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
             isLoading: false,
             hasError: true,
             userDetails: UserModel(),
-            userposts: PostsPageModel());
+            userposts: [],
+            splitposts: []);
       }, (UserModel resp) {
         return AccountState(
             isLoading: false,
             hasError: false,
             userDetails: resp,
-            userposts: PostsPageModel());
+            userposts: [],
+            splitposts: []);
       });
       // const LoadUserPosts();
 
@@ -60,7 +63,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
           isLoading: state.isLoading,
           hasError: state.hasError,
           userDetails: state.userDetails,
-          userposts: PostsPageModel()));
+          userposts: [],
+          splitposts: []));
 
       //get user data
       final result = await _userService.getMyPosts();
@@ -72,14 +76,26 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
             isLoading: false,
             hasError: true,
             userDetails: state.userDetails,
-            userposts: PostsPageModel());
+            userposts: [],
+            splitposts: []);
       }, (PostsPageModel resp) {
-        accountPostListNotifier.value = resp.results!;
+        List<PostModel> posts = resp.results ?? [];
+        List<PostModel> userposts = [];
+        List<PostModel> splitposts = [];
+
+        for (int i = 0; i < posts.length; i++) {
+          if (posts[i].isrepost == true) {
+            splitposts.add(posts[i]);
+          } else {
+            userposts.add(posts[i]);
+          }
+        }
         return AccountState(
             isLoading: state.isLoading,
             hasError: state.isLoading,
             userDetails: state.userDetails,
-            userposts: resp);
+            userposts: userposts,
+            splitposts: splitposts);
       });
       emit(newState);
     });
@@ -90,7 +106,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
           isLoading: true,
           hasError: false,
           userDetails: UserModel(),
-          userposts: state.userposts));
+          userposts: state.userposts,
+          splitposts: state.splitposts));
 
       // //get user data
 
@@ -104,13 +121,15 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
             isLoading: false,
             hasError: true,
             userDetails: UserModel(),
-            userposts: PostsPageModel());
+            userposts: state.userposts,
+            splitposts: state.userposts);
       }, (UserModel resp) {
         return AccountState(
             isLoading: false,
             hasError: false,
             userDetails: resp,
-            userposts: state.userposts);
+            userposts: state.userposts,
+            splitposts: state.splitposts);
       });
       emit(newState);
     });
@@ -123,7 +142,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
           isLoading: true,
           hasError: false,
           userDetails: UserModel(),
-          userposts: PostsPageModel()));
+          userposts: state.userposts,
+          splitposts: state.splitposts));
 
       // //get user data
 
@@ -137,13 +157,15 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
             isLoading: false,
             hasError: true,
             userDetails: UserModel(),
-            userposts: PostsPageModel());
+            userposts: [],
+            splitposts: []);
       }, (UserModel resp) {
         return AccountState(
             isLoading: false,
             hasError: false,
             userDetails: resp,
-            userposts: PostsPageModel());
+            userposts: state.userposts,
+            splitposts: state.splitposts);
       });
       emit(newState);
     });
@@ -153,7 +175,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
           isLoading: true,
           hasError: false,
           userDetails: UserModel(),
-          userposts: state.userposts));
+          userposts: state.userposts,
+          splitposts: state.splitposts));
 
       // //get user data
 
@@ -167,13 +190,15 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
             isLoading: false,
             hasError: true,
             userDetails: UserModel(),
-            userposts: state.userposts);
+            userposts: state.userposts,
+            splitposts: state.splitposts);
       }, (UserModel resp) {
         return AccountState(
             isLoading: false,
             hasError: false,
             userDetails: resp,
-            userposts: state.userposts);
+            userposts: state.userposts,
+            splitposts: state.splitposts);
       });
       emit(newState);
     });

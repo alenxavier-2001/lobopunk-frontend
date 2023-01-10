@@ -318,7 +318,7 @@ class UserImplementation extends UserServices {
       final url = Uri.parse(ApiEndPoints.punkUsers);
       Map<String, dynamic> body = {"channelid": userid};
       UserModel user = constusermodel.value;
-      List punklist = user.punking ?? [];
+      List<String> punklist = user.punking ?? [];
       punklist = List.from(punklist)..addAll([userid]);
       user.punking = punklist;
 

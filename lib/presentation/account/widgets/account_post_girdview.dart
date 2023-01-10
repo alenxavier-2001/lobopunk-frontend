@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lobopunk/application/account/account_bloc.dart';
@@ -12,8 +14,12 @@ import 'package:lobopunk/widgets/custom_loader.dart';
 class AccountPostGirdView extends StatelessWidget {
   final bool isprev;
   final String currentpostid;
+  final bool isSplits;
   const AccountPostGirdView(
-      {Key? key, this.isprev = false, this.currentpostid = ""})
+      {Key? key,
+      this.isprev = false,
+      this.currentpostid = "",
+      required this.isSplits})
       : super(key: key);
 
   @override
@@ -28,7 +34,8 @@ class AccountPostGirdView extends StatelessWidget {
           child: Text("Error Occur"),
         );
       } else {
-        List<PostModel> userposts = state.userposts.results ?? [];
+        List<PostModel> userposts =
+            isSplits ? state.splitposts : state.userposts;
 
         return GridView.builder(
             itemCount: userposts.length,
@@ -63,6 +70,7 @@ class AccountPostGirdView extends StatelessWidget {
                                 MaterialPageRoute(
                                     builder: (context) => AccountPostPageView(
                                           pagenumber: index,
+                                          issplits: isSplits,
                                         )));
                           }
                         },

@@ -62,6 +62,7 @@ class PublicPageImplementation implements PublicPageServices {
         final List<UserModel> userList = (result['results'] as List).map((e) {
           return UserModel.fromJson(e);
         }).toList();
+        // log(userList.length.toString());
         return Right(userList);
       } else {
         log(jsonDecode(response.body));

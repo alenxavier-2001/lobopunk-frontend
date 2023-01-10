@@ -1,10 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:lobopunk/domain/posts/post_model/repost/repost.dart';
 
 part 'post_model.g.dart';
 
 @JsonSerializable()
 class PostModel {
-  String? posttype;
+  bool? isrepost;
   @JsonKey(name: '_id')
   String? id;
   String? userid;
@@ -14,21 +15,23 @@ class PostModel {
   String? thumbnailurl;
   String? description;
   List<String>? hashtags;
+  String? posttype;
   String? posttime;
   bool? public;
   String? pastpost;
   String? nextpost;
-  List<dynamic>? repost;
+  Repost? repost;
   List<dynamic>? mentions;
   List<String>? like;
   List<dynamic>? dislike;
-  List<String>? comments;
+  List<dynamic>? comments;
   List<dynamic>? report;
   @JsonKey(name: '__v')
   int? v;
+  List<String>? repostlist;
 
   PostModel({
-    this.posttype,
+    this.isrepost,
     this.id,
     this.userid,
     this.highvideourl,
@@ -37,6 +40,7 @@ class PostModel {
     this.thumbnailurl,
     this.description,
     this.hashtags,
+    this.posttype,
     this.posttime,
     this.public,
     this.pastpost,
@@ -48,6 +52,7 @@ class PostModel {
     this.comments,
     this.report,
     this.v,
+    this.repostlist,
   });
 
   factory PostModel.fromJson(Map<String, dynamic> json) {

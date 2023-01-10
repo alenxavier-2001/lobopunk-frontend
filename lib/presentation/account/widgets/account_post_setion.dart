@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lobopunk/application/account/account_bloc.dart';
@@ -11,6 +13,8 @@ import 'package:lobopunk/widgets/custom_loader.dart';
 import 'package:lobopunk/widgets/mysizedbox70.dart';
 import 'package:lobopunk/widgets/post_widget.dart';
 
+ValueNotifier<bool> isSplitsNotifier = ValueNotifier(false);
+
 class AccountPostSection extends StatelessWidget {
   const AccountPostSection({
     Key? key,
@@ -21,46 +25,70 @@ class AccountPostSection extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    return Column(
-      children: [
-        const Divider(
-          thickness: 1,
-          color: Colors.grey,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(
-              "Posts",
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineMedium!
-                  .copyWith(fontSize: width / 20, fontWeight: FontWeight.w600),
-            ),
-            Text(
-              "Splits",
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineMedium!
-                  .copyWith(fontSize: width / 20, fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
-        const Divider(
-          thickness: 1,
-          color: Colors.grey,
-        ),
-        const MySizedBox70(),
-        const AccountPostGirdView(),
-        //const MySizedBox(),
-      ],
-    );
+    return ValueListenableBuilder(
+        valueListenable: isSplitsNotifier,
+        builder: (context, bool isSplits, _) {
+          return Column(
+            children: [
+              const Divider(
+                thickness: 1,
+                color: Colors.grey,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      isSplitsNotifier.value = false;
+                    },
+                    child: Text(
+                      "Posts",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(
+                              fontSize: width / 20,
+                              fontWeight: FontWeight.w600,
+                              color: isSplits ? Colors.grey : Colors.white),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      isSplitsNotifier.value = true;
+                    },
+                    child: Text(
+                      "Splits",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(
+                              fontSize: width / 20,
+                              fontWeight: FontWeight.w600,
+                              color: isSplits ? Colors.white : Colors.grey),
+                    ),
+                  ),
+                ],
+              ),
+              const Divider(
+                thickness: 1,
+                color: Colors.grey,
+              ),
+              const MySizedBox70(),
+              AccountPostGirdView(
+                isSplits: isSplits,
+              ),
+              //const MySizedBox(),
+            ],
+          );
+        });
   }
 }
 
 class AccountPostPageView extends StatelessWidget {
   final int pagenumber;
-  const AccountPostPageView({super.key, required this.pagenumber});
+  final bool issplits;
+  const AccountPostPageView(
+      {super.key, required this.pagenumber, required this.issplits});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +101,8 @@ class AccountPostPageView extends StatelessWidget {
             child: Text("Error Occur"),
           );
         } else {
-          List<PostModel> userposts = state.userposts.results ?? [];
+          List<PostModel> userposts =
+              issplits ? state.splitposts : state.userposts;
           return PageView.builder(
               controller: PageController(initialPage: pagenumber),
               onPageChanged: (int page) {

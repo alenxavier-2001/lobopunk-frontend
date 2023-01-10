@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -68,7 +70,7 @@ class PublicpageBloc extends Bloc<PublicpageEvent, PublicpageState> {
         return PublicpageState(
             isLoading: false,
             hasError: true,
-            searchList: [],
+            searchList: state.searchList,
             publicposts: state.publicposts,
             hashtagList: state.hashtagList,
             explorepage: state.explorepage);
@@ -76,7 +78,7 @@ class PublicpageBloc extends Bloc<PublicpageEvent, PublicpageState> {
         return PublicpageState(
             isLoading: false,
             hasError: false,
-            searchList: [],
+            searchList: state.searchList,
             publicposts: state.publicposts,
             hashtagList: state.hashtagList,
             explorepage: resp);
@@ -90,7 +92,7 @@ class PublicpageBloc extends Bloc<PublicpageEvent, PublicpageState> {
           searchList: state.searchList,
           publicposts: state.publicposts,
           explorepage: state.explorepage,
-          hashtagList: []));
+          hashtagList: state.hashtagList));
 
       //get search List
       final result = await publicPageServices.searchUsers(data: event.data);
@@ -99,19 +101,21 @@ class PublicpageBloc extends Bloc<PublicpageEvent, PublicpageState> {
         return PublicpageState(
             isLoading: false,
             hasError: true,
-            searchList: [],
+            searchList: state.searchList,
             publicposts: state.publicposts,
             explorepage: state.explorepage,
-            hashtagList: []);
+            hashtagList: state.hashtagList);
       }, (List<UserModel> resp) {
+        List<UserModel> list = resp;
         return PublicpageState(
             isLoading: false,
             hasError: false,
-            searchList: resp,
+            searchList: list,
             explorepage: state.explorepage,
             publicposts: state.publicposts,
-            hashtagList: []);
+            hashtagList: state.hashtagList);
       });
+
       emit(newState);
     });
   }

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'profileview_bloc.dart';
 
@@ -19,33 +19,33 @@ mixin _$ProfileviewEvent {
   String get userid => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userid) loadData,
+    required TResult Function(String userid) loadProfileData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userid)? loadData,
+    TResult? Function(String userid)? loadProfileData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userid)? loadData,
+    TResult Function(String userid)? loadProfileData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(LoadData value) loadData,
+    required TResult Function(LoadProfileData value) loadProfileData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(LoadData value)? loadData,
+    TResult? Function(LoadProfileData value)? loadProfileData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(LoadData value)? loadData,
+    TResult Function(LoadProfileData value)? loadProfileData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -89,21 +89,22 @@ class _$ProfileviewEventCopyWithImpl<$Res, $Val extends ProfileviewEvent>
 }
 
 /// @nodoc
-abstract class _$$LoadDataCopyWith<$Res>
+abstract class _$$LoadProfileDataCopyWith<$Res>
     implements $ProfileviewEventCopyWith<$Res> {
-  factory _$$LoadDataCopyWith(
-          _$LoadData value, $Res Function(_$LoadData) then) =
-      __$$LoadDataCopyWithImpl<$Res>;
+  factory _$$LoadProfileDataCopyWith(
+          _$LoadProfileData value, $Res Function(_$LoadProfileData) then) =
+      __$$LoadProfileDataCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String userid});
 }
 
 /// @nodoc
-class __$$LoadDataCopyWithImpl<$Res>
-    extends _$ProfileviewEventCopyWithImpl<$Res, _$LoadData>
-    implements _$$LoadDataCopyWith<$Res> {
-  __$$LoadDataCopyWithImpl(_$LoadData _value, $Res Function(_$LoadData) _then)
+class __$$LoadProfileDataCopyWithImpl<$Res>
+    extends _$ProfileviewEventCopyWithImpl<$Res, _$LoadProfileData>
+    implements _$$LoadProfileDataCopyWith<$Res> {
+  __$$LoadProfileDataCopyWithImpl(
+      _$LoadProfileData _value, $Res Function(_$LoadProfileData) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -111,7 +112,7 @@ class __$$LoadDataCopyWithImpl<$Res>
   $Res call({
     Object? userid = null,
   }) {
-    return _then(_$LoadData(
+    return _then(_$LoadProfileData(
       userid: null == userid
           ? _value.userid
           : userid // ignore: cast_nullable_to_non_nullable
@@ -122,22 +123,22 @@ class __$$LoadDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadData implements LoadData {
-  const _$LoadData({required this.userid});
+class _$LoadProfileData implements LoadProfileData {
+  const _$LoadProfileData({required this.userid});
 
   @override
   final String userid;
 
   @override
   String toString() {
-    return 'ProfileviewEvent.loadData(userid: $userid)';
+    return 'ProfileviewEvent.loadProfileData(userid: $userid)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadData &&
+            other is _$LoadProfileData &&
             (identical(other.userid, userid) || other.userid == userid));
   }
 
@@ -147,33 +148,33 @@ class _$LoadData implements LoadData {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$LoadDataCopyWith<_$LoadData> get copyWith =>
-      __$$LoadDataCopyWithImpl<_$LoadData>(this, _$identity);
+  _$$LoadProfileDataCopyWith<_$LoadProfileData> get copyWith =>
+      __$$LoadProfileDataCopyWithImpl<_$LoadProfileData>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userid) loadData,
+    required TResult Function(String userid) loadProfileData,
   }) {
-    return loadData(userid);
+    return loadProfileData(userid);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userid)? loadData,
+    TResult? Function(String userid)? loadProfileData,
   }) {
-    return loadData?.call(userid);
+    return loadProfileData?.call(userid);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userid)? loadData,
+    TResult Function(String userid)? loadProfileData,
     required TResult orElse(),
   }) {
-    if (loadData != null) {
-      return loadData(userid);
+    if (loadProfileData != null) {
+      return loadProfileData(userid);
     }
     return orElse();
   }
@@ -181,40 +182,41 @@ class _$LoadData implements LoadData {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(LoadData value) loadData,
+    required TResult Function(LoadProfileData value) loadProfileData,
   }) {
-    return loadData(this);
+    return loadProfileData(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(LoadData value)? loadData,
+    TResult? Function(LoadProfileData value)? loadProfileData,
   }) {
-    return loadData?.call(this);
+    return loadProfileData?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(LoadData value)? loadData,
+    TResult Function(LoadProfileData value)? loadProfileData,
     required TResult orElse(),
   }) {
-    if (loadData != null) {
-      return loadData(this);
+    if (loadProfileData != null) {
+      return loadProfileData(this);
     }
     return orElse();
   }
 }
 
-abstract class LoadData implements ProfileviewEvent {
-  const factory LoadData({required final String userid}) = _$LoadData;
+abstract class LoadProfileData implements ProfileviewEvent {
+  const factory LoadProfileData({required final String userid}) =
+      _$LoadProfileData;
 
   @override
   String get userid;
   @override
   @JsonKey(ignore: true)
-  _$$LoadDataCopyWith<_$LoadData> get copyWith =>
+  _$$LoadProfileDataCopyWith<_$LoadProfileData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -223,7 +225,8 @@ mixin _$ProfileviewState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
   UserModel get userDetails => throw _privateConstructorUsedError;
-  PostsPageModel get userposts => throw _privateConstructorUsedError;
+  List<PostModel> get userposts => throw _privateConstructorUsedError;
+  List<PostModel> get splitposts => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProfileviewStateCopyWith<ProfileviewState> get copyWith =>
@@ -240,7 +243,8 @@ abstract class $ProfileviewStateCopyWith<$Res> {
       {bool isLoading,
       bool hasError,
       UserModel userDetails,
-      PostsPageModel userposts});
+      List<PostModel> userposts,
+      List<PostModel> splitposts});
 }
 
 /// @nodoc
@@ -260,6 +264,7 @@ class _$ProfileviewStateCopyWithImpl<$Res, $Val extends ProfileviewState>
     Object? hasError = null,
     Object? userDetails = null,
     Object? userposts = null,
+    Object? splitposts = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -277,7 +282,11 @@ class _$ProfileviewStateCopyWithImpl<$Res, $Val extends ProfileviewState>
       userposts: null == userposts
           ? _value.userposts
           : userposts // ignore: cast_nullable_to_non_nullable
-              as PostsPageModel,
+              as List<PostModel>,
+      splitposts: null == splitposts
+          ? _value.splitposts
+          : splitposts // ignore: cast_nullable_to_non_nullable
+              as List<PostModel>,
     ) as $Val);
   }
 }
@@ -294,7 +303,8 @@ abstract class _$$_ProfileviewStateCopyWith<$Res>
       {bool isLoading,
       bool hasError,
       UserModel userDetails,
-      PostsPageModel userposts});
+      List<PostModel> userposts,
+      List<PostModel> splitposts});
 }
 
 /// @nodoc
@@ -312,6 +322,7 @@ class __$$_ProfileviewStateCopyWithImpl<$Res>
     Object? hasError = null,
     Object? userDetails = null,
     Object? userposts = null,
+    Object? splitposts = null,
   }) {
     return _then(_$_ProfileviewState(
       isLoading: null == isLoading
@@ -327,9 +338,13 @@ class __$$_ProfileviewStateCopyWithImpl<$Res>
           : userDetails // ignore: cast_nullable_to_non_nullable
               as UserModel,
       userposts: null == userposts
-          ? _value.userposts
+          ? _value._userposts
           : userposts // ignore: cast_nullable_to_non_nullable
-              as PostsPageModel,
+              as List<PostModel>,
+      splitposts: null == splitposts
+          ? _value._splitposts
+          : splitposts // ignore: cast_nullable_to_non_nullable
+              as List<PostModel>,
     ));
   }
 }
@@ -341,7 +356,10 @@ class _$_ProfileviewState implements _ProfileviewState {
       {required this.isLoading,
       required this.hasError,
       required this.userDetails,
-      required this.userposts});
+      required final List<PostModel> userposts,
+      required final List<PostModel> splitposts})
+      : _userposts = userposts,
+        _splitposts = splitposts;
 
   @override
   final bool isLoading;
@@ -349,12 +367,25 @@ class _$_ProfileviewState implements _ProfileviewState {
   final bool hasError;
   @override
   final UserModel userDetails;
+  final List<PostModel> _userposts;
   @override
-  final PostsPageModel userposts;
+  List<PostModel> get userposts {
+    if (_userposts is EqualUnmodifiableListView) return _userposts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_userposts);
+  }
+
+  final List<PostModel> _splitposts;
+  @override
+  List<PostModel> get splitposts {
+    if (_splitposts is EqualUnmodifiableListView) return _splitposts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_splitposts);
+  }
 
   @override
   String toString() {
-    return 'ProfileviewState(isLoading: $isLoading, hasError: $hasError, userDetails: $userDetails, userposts: $userposts)';
+    return 'ProfileviewState(isLoading: $isLoading, hasError: $hasError, userDetails: $userDetails, userposts: $userposts, splitposts: $splitposts)';
   }
 
   @override
@@ -368,13 +399,20 @@ class _$_ProfileviewState implements _ProfileviewState {
                 other.hasError == hasError) &&
             (identical(other.userDetails, userDetails) ||
                 other.userDetails == userDetails) &&
-            (identical(other.userposts, userposts) ||
-                other.userposts == userposts));
+            const DeepCollectionEquality()
+                .equals(other._userposts, _userposts) &&
+            const DeepCollectionEquality()
+                .equals(other._splitposts, _splitposts));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, isLoading, hasError, userDetails, userposts);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      hasError,
+      userDetails,
+      const DeepCollectionEquality().hash(_userposts),
+      const DeepCollectionEquality().hash(_splitposts));
 
   @JsonKey(ignore: true)
   @override
@@ -388,7 +426,8 @@ abstract class _ProfileviewState implements ProfileviewState {
       {required final bool isLoading,
       required final bool hasError,
       required final UserModel userDetails,
-      required final PostsPageModel userposts}) = _$_ProfileviewState;
+      required final List<PostModel> userposts,
+      required final List<PostModel> splitposts}) = _$_ProfileviewState;
 
   @override
   bool get isLoading;
@@ -397,7 +436,9 @@ abstract class _ProfileviewState implements ProfileviewState {
   @override
   UserModel get userDetails;
   @override
-  PostsPageModel get userposts;
+  List<PostModel> get userposts;
+  @override
+  List<PostModel> get splitposts;
   @override
   @JsonKey(ignore: true)
   _$$_ProfileviewStateCopyWith<_$_ProfileviewState> get copyWith =>

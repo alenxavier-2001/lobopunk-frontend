@@ -6,10 +6,12 @@ class ProfileviewState with _$ProfileviewState {
       {required bool isLoading,
       required bool hasError,
       required UserModel userDetails,
-      required PostsPageModel userposts}) = _ProfileviewState;
+      required List<PostModel> userposts,
+      required List<PostModel> splitposts}) = _ProfileviewState;
   factory ProfileviewState.initial() => ProfileviewState(
       isLoading: false,
       hasError: false,
       userDetails: UserModel(),
-      userposts: PostsPageModel());
+      userposts: [],
+      splitposts: []);
 }

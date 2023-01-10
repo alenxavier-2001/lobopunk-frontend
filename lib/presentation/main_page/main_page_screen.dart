@@ -7,6 +7,7 @@ import 'package:lobopunk/core/basic_scafoldmsg.dart';
 import 'package:lobopunk/presentation/account/account_screen.dart';
 import 'package:lobopunk/presentation/home/home_screen.dart';
 import 'package:lobopunk/presentation/main_page/bottom_nav.dart';
+import 'package:lobopunk/presentation/notification/notification_screen.dart';
 import 'package:lobopunk/presentation/publicpage/public_screen.dart';
 
 class MainPageScreen extends StatelessWidget {
@@ -16,12 +17,8 @@ class MainPageScreen extends StatelessWidget {
   final _pages = [
     const HomeScreen(),
     PublicScreen(),
-    Container(
-      child: Center(child: Text("Add post")),
-    ),
-    Container(
-      child: Center(child: Text("Notification")),
-    ),
+    const Center(child: Text("Add post")),
+    const NotificationScreen(),
     const AccountScreen(),
   ];
   handledynamic(

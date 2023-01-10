@@ -9,6 +9,7 @@ import 'package:lobopunk/application/account/account_bloc.dart';
 import 'package:lobopunk/application/comment/comment_bloc.dart';
 import 'package:lobopunk/application/hashtag_screen/hashtagscreen_bloc.dart';
 import 'package:lobopunk/application/home/home_bloc.dart';
+import 'package:lobopunk/application/notification/notification_bloc.dart';
 import 'package:lobopunk/application/profile_view/profileview_bloc.dart';
 import 'package:lobopunk/application/publicpage/publicpage_bloc.dart';
 import 'package:lobopunk/core/common_notifer.dart';
@@ -31,7 +32,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await configureInjection();
+  configureDependencies();
 
   runApp(MyApp(/*initialLink: initialLink*/));
 }
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (ctx) => getIt<PublicpageBloc>()),
         BlocProvider(create: (ctx) => getIt<HashtagscreenBloc>()),
         BlocProvider(create: (ctx) => getIt<ProfileviewBloc>()),
+        BlocProvider(create: (ctx) => getIt<NotificationBloc>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

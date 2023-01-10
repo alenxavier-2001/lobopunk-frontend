@@ -18,6 +18,7 @@ class PostPrevEdit extends StatelessWidget {
       body: AccountPostGirdView(
         isprev: true,
         currentpostid: postdata.id.toString(),
+        isSplits: false,
       ),
     );
   }

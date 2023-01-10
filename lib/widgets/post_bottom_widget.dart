@@ -37,7 +37,7 @@ class PostBottomWidget extends StatelessWidget {
                 navIndexChangeNotifier.value = 4;
               } else {
                 BlocProvider.of<ProfileviewBloc>(context)
-                    .add(LoadData(userid: data.userid.toString()));
+                    .add(LoadProfileData(userid: data.userid.toString()));
 
                 Navigator.push(
                     context,

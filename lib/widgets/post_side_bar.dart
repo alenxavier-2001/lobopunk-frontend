@@ -1,13 +1,19 @@
+import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:lobopunk/core/color.dart';
 import 'package:lobopunk/core/contasts.dart';
 import 'package:lobopunk/core/k_m_b_converter.dart';
 import 'package:lobopunk/core/post_notifier.dart';
+import 'package:lobopunk/domain/core/failures/main_failure.dart';
+import 'package:lobopunk/domain/core/failures/server_error_model/server_error_model.dart';
 import 'package:lobopunk/domain/posts/post_model/post_model.dart';
 import 'package:lobopunk/infrastructure/post/post_impl.dart';
+import 'package:lobopunk/presentation/account/widgets/get_repost_list.dart';
 import 'package:lobopunk/presentation/account/widgets/post_edit_section.dart';
 import 'package:lobopunk/presentation/account/widgets/post_prev_edit.dart';
+import 'package:lobopunk/widgets/curved_elevated_button.dart';
 
 import 'package:lobopunk/widgets/mysizedbox.dart';
 import 'package:lobopunk/widgets/mysizedbox70.dart';
@@ -73,7 +79,10 @@ class PostSideBar extends StatelessWidget {
                             ),
                             builder: ((context) {
                               return SizedBox(
-                                height: height / 5,
+                                height:
+                                    (constusermodel.value.id == postdata.userid)
+                                        ? height / 4.2
+                                        : height / 5.5,
                                 child: Column(
                                   children: [
                                     const MySizedBox70(),
@@ -114,6 +123,50 @@ class PostSideBar extends StatelessWidget {
                                         : Container(),
                                     (constusermodel.value.id == postdata.userid)
                                         ? InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              showModalBottomSheet(
+                                                  context: context,
+                                                  backgroundColor: Theme.of(
+                                                          context)
+                                                      .scaffoldBackgroundColor,
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.vertical(
+                                                      top:
+                                                          Radius.circular(25.0),
+                                                    ),
+                                                  ),
+                                                  builder: ((context) {
+                                                    return SizedBox(
+                                                      height: height / 1.5,
+                                                      child:
+                                                          GetRepostListWidget(
+                                                        postid: postdata.id
+                                                            .toString(),
+                                                      ),
+                                                    );
+                                                  }));
+                                            },
+                                            child: Text(
+                                              "Split list",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                      fontSize: width / 20,
+                                                      color: Colors.red,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                            ),
+                                          )
+                                        : Container(),
+                                    (constusermodel.value.id == postdata.userid)
+                                        ? const MySizedBox70()
+                                        : Container(),
+                                    (constusermodel.value.id == postdata.userid)
+                                        ? InkWell(
                                             onTap: () {},
                                             child: Text(
                                               "Delete",
@@ -140,7 +193,125 @@ class PostSideBar extends StatelessWidget {
                       )),
                   const Spacer(),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      DateTime now = DateTime.now();
+                      (constusermodel.value.id == postdata.userid)
+                          ? null
+                          : showModalBottomSheet(
+                              context: context,
+                              backgroundColor:
+                                  Theme.of(context).scaffoldBackgroundColor,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(25.0),
+                                ),
+                              ),
+                              builder: ((context) {
+                                return SizedBox(
+                                  height: height / 4,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(width / 20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const MySizedBox70(),
+                                        Center(
+                                          child: Text(
+                                            "Split the post",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineMedium!
+                                                .copyWith(
+                                                    color: Colors.white,
+                                                    fontSize: width / 18),
+                                          ),
+                                        ),
+                                        const MySizedBox70(),
+                                        SizedBox(
+                                          height: height / 25,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "You want request for spliting this post",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                        color: Colors.white),
+                                              ),
+                                              Text(
+                                                "Learn more ..",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                        color: Colors.blue),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const MySizedBox(),
+                                        Center(
+                                          child: SizedBox(
+                                            width: width / 1.1,
+                                            child: CurvedElevatedButton(
+                                                text: "Request",
+                                                background: appColor,
+                                                onpress: () async {
+                                                  Map<String, dynamic> data = {
+                                                    "postid": postdata.id,
+                                                    "time":
+                                                        now.toUtc().toString()
+                                                  };
+                                                  final res =
+                                                      await PostImplementation()
+                                                          .rePostRequest(data);
+                                                  res.fold((MainFailure error) {
+                                                    error.whenOrNull(
+                                                        clientFailure:
+                                                            (String err) {
+                                                      Navigator.pop(context);
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                            content: Text(err)),
+                                                      );
+                                                    }, serverFailure:
+                                                            (ServerErrorModel
+                                                                err) {
+                                                      Navigator.pop(context);
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                            content: Text(err
+                                                                .msg
+                                                                .toString())),
+                                                      );
+                                                    });
+                                                  }, (r) {
+                                                    Navigator.pop(context);
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                          content: Text(
+                                                              'Successfully request sended')),
+                                                    );
+                                                  });
+                                                }),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }));
+                    },
                     child: Icon(
                       Icons.monetization_on_outlined,
                       size: width / 11,

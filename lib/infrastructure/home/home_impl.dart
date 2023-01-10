@@ -29,8 +29,9 @@ class HomeImplementation implements HomeServices {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        log("successs");
         final result = PostsPageModel.fromJson(jsonDecode(response.body));
-
+        log("successs model problme");
         return Right(result);
       } else {
         return Left(MainFailure.serverFailure(

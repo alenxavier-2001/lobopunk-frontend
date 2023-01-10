@@ -59,6 +59,7 @@ dependencies:
   firebase_core: ^2.4.0
   visibility_detector: ^0.3.3
   url_launcher: ^6.1.7
+  badges: ^2.0.3
   
 
 dev_dependencies:

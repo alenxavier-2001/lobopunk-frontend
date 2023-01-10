@@ -15,14 +15,14 @@ import 'package:lobopunk/infrastructure/userdetails/user_impl.dart';
 import 'package:lobopunk/presentation/publicpage/widgets/explore_section.dart';
 import 'package:lobopunk/presentation/publicpage/widgets/public_post_widget.dart';
 import 'package:lobopunk/presentation/publicpage/widgets/publicpost_gird_view.dart';
+import 'package:lobopunk/presentation/publicpage/widgets/search_page.dart';
 import 'package:lobopunk/widgets/curved_elevated_button.dart';
 import 'package:lobopunk/widgets/custom_loader.dart';
 
 ValueNotifier<int> hashtagindex = ValueNotifier(0);
 
 class PublicScreen extends StatelessWidget {
-  PublicScreen({super.key});
-  final _debouncer = Debouncer(milliseconds: 1 * 1000);
+  const PublicScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +41,10 @@ class PublicScreen extends StatelessWidget {
           return const Center(
             child: Text("Error Occur"),
           );
+        } else if (state.hasError) {
+          return const Center(
+            child: Text("Error Occur"),
+          );
         } else {
           BlocProvider.of<PublicpageBloc>(context)
               .add(const LoadExploreSection());
@@ -51,26 +55,43 @@ class PublicScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CupertinoSearchTextField(
-                    backgroundColor: Colors.grey.withOpacity(0.5),
-                    prefixIcon: const Icon(
-                      CupertinoIcons.search,
-                      color: Colors.grey,
-                    ),
-                    suffixIcon: const Icon(
-                      CupertinoIcons.xmark_circle_fill,
-                      color: Colors.grey,
-                    ),
-                    style: const TextStyle(color: Colors.white),
-                    onChanged: (value) {
-                      if (value.isEmpty) {
-                        return;
-                      }
-                      _debouncer.run(() {
-                        BlocProvider.of<PublicpageBloc>(context)
-                            .add(SearchEvent(data: value));
-                      });
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SearchPageScreen()));
                     },
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: width / 60),
+                      height: height / 22,
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade600,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: width / 50,
+                          ),
+                          Icon(
+                            CupertinoIcons.search,
+                            color: Colors.grey.shade200,
+                          ),
+                        ],
+                      ),
+                    ),
+                    // child: CupertinoSearchTextField(
+                    //   backgroundColor: Colors.grey.withOpacity(0.5),
+                    //   prefixIcon: const Icon(
+                    //     CupertinoIcons.search,
+                    //     color: Colors.grey,
+                    //   ),
+                    //   suffixIcon: const Icon(
+                    //     CupertinoIcons.xmark_circle_fill,
+                    //     color: Colors.grey,
+                    //   ),
+                    //   style: const TextStyle(color: Colors.white),
+                    // ),
                   ),
 
                   SizedBox(

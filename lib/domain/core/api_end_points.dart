@@ -49,4 +49,15 @@ class ApiEndPoints {
 
   //get hash tags
   static const gethashtags = "${kBaseurl}gethashtags";
+
+//Repost Section
+  static const repost = "${kBaseurl}repost";
+  static const repostdelete = "${kBaseurl}deleterepost";
+  static const repostrequest = "${kBaseurl}repostrequest";
+  static const acceptrepostrequest = "${kBaseurl}acceptrepostrequest";
+  static const rejectrepostrequest = "${kBaseurl}rejectrepostrequest";
+  static const removerepostrequest = "${kBaseurl}removerepostrequest";
+  static const getrepostreceivedrequests =
+      "${kBaseurl}getrepostreceivedrequests";
+  static const getrepostsentrequests = "${kBaseurl}getrepostsentrequests";
 }

@@ -6,11 +6,13 @@ class AccountState with _$AccountState {
       {required bool isLoading,
       required bool hasError,
       required UserModel userDetails,
-      required PostsPageModel userposts}) = _AccountState;
+      required List<PostModel> userposts,
+      required List<PostModel> splitposts}) = _AccountState;
 
   factory AccountState.initial() => AccountState(
       isLoading: false,
       hasError: false,
       userDetails: UserModel(),
-      userposts: PostsPageModel());
+      userposts: [],
+      splitposts: []);
 }

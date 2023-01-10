@@ -13,6 +13,7 @@ import 'package:lobopunk/domain/core/failures/server_error_model/server_error_mo
 import 'package:lobopunk/domain/posts/post_model/post_model.dart';
 import 'package:lobopunk/domain/posts/post_services.dart';
 import 'package:lobopunk/domain/posts/posts_page_model/posts_page_model.dart';
+import 'package:lobopunk/domain/repost/repost_request_model/repost_request_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -114,6 +115,95 @@ class PostImplementation implements PostService {
           body: data);
       if (response.statusCode == 200 || response.statusCode == 201) {
         final result = PostModel.fromJson(jsonDecode(response.body));
+        return Right(result);
+      } else {
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
+      }
+    } catch (e) {
+      log(e.toString());
+      return Left(MainFailure.clientFailure(e.toString()));
+    }
+  }
+
+//repost request
+  @override
+  Future<Either<MainFailure, RepostRequestModel>> rePostRequest(
+      Map<String, dynamic> data) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String token = prefs.getString('token') ?? "";
+      final url = Uri.parse(ApiEndPoints.repostrequest);
+
+      final response = await http.post(url,
+          headers: <String, String>{
+            'x-auth-token': token,
+            // 'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: data);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final result = RepostRequestModel.fromJson(jsonDecode(response.body));
+
+        return Right(result);
+      } else {
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
+      }
+    } catch (e) {
+      log(e.toString());
+      return Left(MainFailure.clientFailure(e.toString()));
+    }
+  }
+
+//Split the post
+  @override
+  Future<Either<MainFailure, PostModel>> splitPost(
+      Map<String, dynamic> data) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String token = prefs.getString('token') ?? "";
+      final url = Uri.parse(ApiEndPoints.repost);
+
+      final response = await http.post(url,
+          headers: <String, String>{
+            'x-auth-token': token,
+            // 'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: data);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final result = PostModel.fromJson(jsonDecode(response.body));
+
+        return Right(result);
+      } else {
+        return Left(MainFailure.serverFailure(
+            ServerErrorModel.fromJson(jsonDecode(response.body))));
+      }
+    } catch (e) {
+      log(e.toString());
+      return Left(MainFailure.clientFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<MainFailure, PostModel>> rePostDelete(
+      Map<String, dynamic> data) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String token = prefs.getString('token') ?? "";
+      final url = Uri.parse(ApiEndPoints.repostdelete);
+
+      final response = await http.post(url,
+          headers: <String, String>{
+            'x-auth-token': token,
+            // 'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: data);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final result = PostModel.fromJson(jsonDecode(response.body));
+
         return Right(result);
       } else {
         return Left(MainFailure.serverFailure(
@@ -245,6 +335,41 @@ class PostImplementation implements PostService {
     } catch (e) {
       log(e.toString());
       return Left(MainFailure.clientFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<PostsPageModel> getRepostlist(String postid) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String token = prefs.getString('token') ?? "";
+      final url = Uri.parse("$kBaseurl/getrepostlist/$postid/");
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'x-auth-token': token,
+          // 'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final result = PostsPageModel.fromJson(jsonDecode(response.body));
+
+        return result;
+      } else {
+        return PostsPageModel.fromJson({"page": 0, "results": []});
+      }
+    } catch (e) {
+      log(e.toString());
+      return PostsPageModel.fromJson({"page": 0, "results": []});
+    }
+  }
+
+  Stream<PostsPageModel> getrepostListStream(
+      Duration refreshTime, String postid) async* {
+    while (true) {
+      await Future.delayed(refreshTime);
+      yield await getRepostlist(postid);
     }
   }
 }

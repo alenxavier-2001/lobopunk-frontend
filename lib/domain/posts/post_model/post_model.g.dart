@@ -7,7 +7,7 @@ part of 'post_model.dart';
 // **************************************************************************
 
 PostModel _$PostModelFromJson(Map<String, dynamic> json) => PostModel(
-      posttype: json['posttype'] as String?,
+      isrepost: json['isrepost'] as bool?,
       id: json['_id'] as String?,
       userid: json['userid'] as String?,
       highvideourl: json['highvideourl'] as String?,
@@ -18,23 +18,27 @@ PostModel _$PostModelFromJson(Map<String, dynamic> json) => PostModel(
       hashtags: (json['hashtags'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      posttype: json['posttype'] as String?,
       posttime: json['posttime'] as String?,
       public: json['public'] as bool?,
       pastpost: json['pastpost'] as String?,
       nextpost: json['nextpost'] as String?,
-      repost: json['repost'] as List<dynamic>?,
+      repost: json['repost'] == null
+          ? null
+          : Repost.fromJson(json['repost'] as Map<String, dynamic>),
       mentions: json['mentions'] as List<dynamic>?,
       like: (json['like'] as List<dynamic>?)?.map((e) => e as String).toList(),
       dislike: json['dislike'] as List<dynamic>?,
-      comments: (json['comments'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      comments: json['comments'] as List<dynamic>?,
       report: json['report'] as List<dynamic>?,
       v: json['__v'] as int?,
+      repostlist: (json['repostlist'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$PostModelToJson(PostModel instance) => <String, dynamic>{
-      'posttype': instance.posttype,
+      'isrepost': instance.isrepost,
       '_id': instance.id,
       'userid': instance.userid,
       'highvideourl': instance.highvideourl,
@@ -43,6 +47,7 @@ Map<String, dynamic> _$PostModelToJson(PostModel instance) => <String, dynamic>{
       'thumbnailurl': instance.thumbnailurl,
       'description': instance.description,
       'hashtags': instance.hashtags,
+      'posttype': instance.posttype,
       'posttime': instance.posttime,
       'public': instance.public,
       'pastpost': instance.pastpost,
@@ -54,4 +59,5 @@ Map<String, dynamic> _$PostModelToJson(PostModel instance) => <String, dynamic>{
       'comments': instance.comments,
       'report': instance.report,
       '__v': instance.v,
+      'repostlist': instance.repostlist,
     };
